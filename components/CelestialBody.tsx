@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { CelestialBodyData } from '../types';
 import { calculateOrbitPosition, PLANET_COLORS, SIZE_SCALE } from '../utils/orbitalPhysics';
 import { OrbitLine } from './OrbitLine';
+const SIMULATION_SPEED = 0.25; // 例: 25%の速さ
 
 interface CelestialBodyProps {
   data: CelestialBodyData;
@@ -54,7 +55,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   // Rotation period in hours. Earth ~24h.
   // We need a visual rotation speed.
   const rotationSpeed = data.physical.sidereal_rotation_period_hours 
-    ? 0.02 * (24 / Math.abs(data.physical.sidereal_rotation_period_hours))
+    ? 0.02 * (24 / Math.abs(data.physical.sidereal_rotation_period_hours)) * SIMULATION_SPEED
     : 0;
   
   // Use a Ref for current orbit time to avoid re-renders on every frame
@@ -82,7 +83,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
     if (groupRef.current && data.orbit) {
       // Update orbit position
       if (!isPaused) {
-        timeRef.current += delta * timeScale * 0.5; // Base speed
+        timeRef.current += delta * timeScale * 0.5 * SIMULATION_SPEED; // Base speed
       }
 
       const pos = calculateOrbitPosition(
