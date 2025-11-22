@@ -1,0 +1,5 @@
+{
+  "name": "Solar System Explorer 3D",
+  "description": "An interactive 3D visualization of the Solar System using real orbital mechanics data. Navigate the cosmos and explore detailed information about celestial bodies.",
+  "requestFramePermissions": []
+}
