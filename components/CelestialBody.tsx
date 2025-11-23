@@ -87,17 +87,21 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const issModel = useGLTF(toAssetPath('/models/iss.glb'));
   useGLTF.preload(toAssetPath('/models/iss.glb'));
 
-  // Compute scale for ISS so its longest dimension matches scaled physical size with a visibility floor.
+  // Measure ISS GLB size once and scale it down to a small, frustum-safe length (~0.006 AU).
+  const issModelSize = useMemo(() => {
+    if (data.id !== 'iss' || !issModel?.scene) return null;
+    const box = new THREE.Box3().setFromObject(issModel.scene);
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    return size;
+  }, [data.id, issModel]);
+
   const issScale = useMemo(() => {
     if (data.id !== 'iss') return null;
-    const dims = data.physical.dimensions_m;
-    const lengthM = dims?.span ?? dims?.length ?? 100; // prefer full span
-    const meterToAU = 1 / 149597870700; // 1 m in AU
-    const targetRadius = Math.max((lengthM * meterToAU * SIZE_SCALE) / 2, MIN_VISUAL_RADIUS);
-    const targetLengthAU = targetRadius * 2;
-    const baseLengthAU = Math.max(lengthM * meterToAU, 1e-9);
-    return targetLengthAU / baseLengthAU;
-  }, [data.id, data.physical.dimensions_m]);
+    const baseLength = issModelSize ? Math.max(issModelSize.x, issModelSize.y, issModelSize.z) : 75;
+    const targetLengthAU = MIN_VISUAL_RADIUS * 2; // matches prior sphere diameter to keep visual size consistent
+    return targetLengthAU / baseLength;
+  }, [data.id, issModelSize]);
   
   // Calculate rotation speed relative to frame
   // Rotation period in hours. Earth ~24h.
