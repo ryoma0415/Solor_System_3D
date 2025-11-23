@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CelestialBodyData } from '../types';
 
 interface InfoPanelProps {
@@ -6,8 +6,22 @@ interface InfoPanelProps {
   onClose: () => void;
 }
 
+const AUDIO_SOURCES: Record<string, string> = {
+  sun: '/audio/sun_a.wav',
+  mercury: '/audio/mercury_a.wav',
+  venus: '/audio/venus_a.wav'
+};
+
+const toAssetPath = (path: string): string => {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+  return `${base}${path.startsWith('/') ? path : `/${path}`}`;
+};
+
 export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
   if (!body) return null;
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const formatNumber = (value: number | null | undefined, fraction = 0) =>
     value == null ? 'N/A' : value.toLocaleString(undefined, { maximumFractionDigits: fraction, minimumFractionDigits: fraction });
@@ -30,6 +44,41 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
     { title: 'Features', text: body.description?.features_ja },
   ].filter(block => block.text);
 
+  const audioSrc = AUDIO_SOURCES[body.id] ? toAssetPath(AUDIO_SOURCES[body.id]) : null;
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    setIsPlaying(false);
+  };
+
+  useEffect(() => {
+    stopAudio();
+    return () => stopAudio();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [body.id]);
+
+  const handleAudioToggle = () => {
+    if (!audioSrc) return;
+    if (isPlaying) {
+      stopAudio();
+      return;
+    }
+    const audio = new Audio(audioSrc);
+    audioRef.current = audio;
+    audio.onended = () => setIsPlaying(false);
+    audio.onerror = () => setIsPlaying(false);
+    audio.play()
+      .then(() => setIsPlaying(true))
+      .catch(() => {
+        setIsPlaying(false);
+        audioRef.current = null;
+      });
+  };
+
   return (
     <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-slate-900/90 backdrop-blur-xl border-l border-slate-700 p-6 overflow-y-auto transition-transform duration-300 ease-in-out z-20 shadow-2xl">
       <button 
@@ -47,6 +96,22 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
           </span>
           <h2 className="text-4xl font-bold mt-2 text-white">{body.name.ja}</h2>
           <h3 className="text-xl text-slate-400 font-light">{body.name.en}</h3>
+
+          {audioSrc && (
+            <div className="mt-4 flex items-center gap-3 flex-wrap">
+              <button
+                onClick={handleAudioToggle}
+                className={`px-3 py-1.5 rounded text-xs font-bold transition-all border ${
+                  isPlaying
+                    ? 'bg-green-600 border-green-400 text-white shadow-[0_0_10px_rgba(34,197,94,0.4)]'
+                    : 'bg-slate-800 border-slate-600 text-slate-200 hover:bg-slate-700'
+                }`}
+              >
+                {isPlaying ? 'Stop Audio' : 'Play Audio'}
+              </button>
+              <span className="text-[11px] text-slate-400">VOICEVOX:小夜/SAYO</span>
+            </div>
+          )}
         </div>
 
         {/* Description */}
