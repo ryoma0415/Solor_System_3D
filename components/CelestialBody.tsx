@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useTexture, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { CelestialBodyData } from '../types';
-import { calculateOrbitPosition, PLANET_COLORS, SIZE_SCALE } from '../utils/orbitalPhysics';
+import { calculateOrbitPosition, MIN_VISUAL_RADIUS, PLANET_COLORS, SIZE_SCALE } from '../utils/orbitalPhysics';
 import { OrbitLine } from './OrbitLine';
 const SIMULATION_SPEED = 0.25; // 例: 25%の速さ
 
@@ -50,6 +50,8 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHover] = useState(false);
+  const { scene } = useThree();
+  const parentPositionRef = useRef(new THREE.Vector3());
   
   // Calculate rotation speed relative to frame
   // Rotation period in hours. Earth ~24h.
@@ -63,15 +65,18 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
 
   // Calculate Size
   // Real size in AU: radius_km / 149597870.7
-  const radiusAU = data.physical.mean_radius_km / 149597870.7;
+  const radiusKm = data.physical.mean_radius_km ?? data.physical.equatorial_radius_km ?? 0;
+  const radiusAU = radiusKm / 149597870.7;
   // Apply visual scale factor, but ensure minimum visibility
-  const visualRadius = Math.max(radiusAU * SIZE_SCALE, 0.05);
+  const visualRadius = Math.max(radiusAU * SIZE_SCALE, MIN_VISUAL_RADIUS);
 
   // Color lookup
   const color = PLANET_COLORS[data.id] || '#ffffff';
 
   // Determine if this body should be highlighted
-  const isTarget = showHighlight && data.category === 'dwarf_planet';
+  const isSmallCategory = ['dwarf_planet', 'moon', 'artificial_satellite', 'comet'].includes(data.category);
+  const isTinyBody = radiusKm === 0 || radiusKm < 1500;
+  const isTarget = showHighlight && (isSmallCategory || isTinyBody);
 
   // Axial Tilt (Obliquity)
   const axialTiltRad = (data.physical.axial_tilt_deg || 0) * (Math.PI / 180);
@@ -91,6 +96,19 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         data.orbit.sidereal_orbital_period_years,
         timeRef.current
       );
+
+      if (data.parent_id) {
+        const parentObj = scene.getObjectByName(data.parent_id);
+        if (parentObj) {
+          parentObj.getWorldPosition(parentPositionRef.current);
+        } else {
+          parentPositionRef.current.set(0, 0, 0);
+        }
+        pos.add(parentPositionRef.current);
+      } else {
+        parentPositionRef.current.set(0, 0, 0);
+      }
+
       groupRef.current.position.copy(pos);
     }
 
@@ -132,7 +150,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
 
   return (
     <group>
-      <OrbitLine orbit={data.orbit} color={isTarget ? '#d8b4fe' : color} />
+      <OrbitLine orbit={data.orbit} color={isTarget ? '#d8b4fe' : color} parentId={data.parent_id ?? undefined} />
       
       <group 
         ref={groupRef}
@@ -188,6 +206,18 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
               <span className="text-xs font-bold">{data.name.ja}</span>
               {hovered && <span className="text-[10px] ml-1 opacity-75">({data.name.en})</span>}
             </div>
+          </Html>
+        )}
+
+        {/* Marker for tiny bodies so they don't get lost when zoomed out */}
+        {isTinyBody && (
+          <Html center position={[0, visualRadius + 0.1, 0]} zIndexRange={[50, 0]}>
+            <div
+              className={`w-4 h-4 rounded-full border-2 ${
+                isTarget ? 'border-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.6)]' : 'border-white/60'
+              } bg-white/5 backdrop-blur-sm`}
+              style={{ opacity: hovered ? 1 : 0.7, pointerEvents: 'none' }}
+            />
           </Html>
         )}
       </group>

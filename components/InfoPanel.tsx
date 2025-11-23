@@ -9,6 +9,27 @@ interface InfoPanelProps {
 export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
   if (!body) return null;
 
+  const formatNumber = (value: number | null | undefined, fraction = 0) =>
+    value == null ? 'N/A' : value.toLocaleString(undefined, { maximumFractionDigits: fraction, minimumFractionDigits: fraction });
+  const formatExp = (value: number | null | undefined) =>
+    value == null ? 'N/A' : value.toExponential(2);
+  const formatFixed = (value: number | null | undefined, digits = 2) =>
+    value == null ? 'N/A' : value.toFixed(digits);
+  const categoryLabelMap: Partial<Record<string, string>> = {
+    star: 'Star',
+    planet: 'Planet',
+    dwarf_planet: 'Dwarf Planet',
+    moon: 'Moon',
+    artificial_satellite: 'Artificial Satellite',
+    comet: 'Comet'
+  };
+  const categoryLabel = categoryLabelMap[body.category] ?? body.category.replace('_', ' ');
+  const descriptionBlocks = [
+    { title: 'Overview', text: body.description?.overview_ja ?? body.description_ja },
+    { title: 'Composition', text: body.description?.composition_ja },
+    { title: 'Features', text: body.description?.features_ja },
+  ].filter(block => block.text);
+
   return (
     <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-slate-900/90 backdrop-blur-xl border-l border-slate-700 p-6 overflow-y-auto transition-transform duration-300 ease-in-out z-20 shadow-2xl">
       <button 
@@ -22,18 +43,25 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
         {/* Header */}
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-900/30 px-2 py-1 rounded-sm border border-blue-900/50">
-            {body.category.replace('_', ' ')}
+            {categoryLabel}
           </span>
           <h2 className="text-4xl font-bold mt-2 text-white">{body.name.ja}</h2>
           <h3 className="text-xl text-slate-400 font-light">{body.name.en}</h3>
         </div>
 
         {/* Description */}
-        <div className="prose prose-invert prose-sm">
-          <p className="leading-relaxed text-slate-300 text-justify">
-            {body.description_ja}
-          </p>
-        </div>
+        {descriptionBlocks.length > 0 && (
+          <div className="space-y-3">
+            {descriptionBlocks.map(block => (
+              <div key={block.title} className="prose prose-invert prose-sm">
+                <h4 className="text-xs uppercase tracking-wide text-slate-400">{block.title}</h4>
+                <p className="leading-relaxed text-slate-300 text-justify">
+                  {block.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="h-px bg-slate-800 w-full" />
 
@@ -44,10 +72,10 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
             Physical Characteristics (物理的特徴)
           </h4>
           <div className="grid grid-cols-2 gap-3">
-            <StatBox label="Radius (半径)" value={`${body.physical.mean_radius_km.toLocaleString()} km`} />
-            <StatBox label="Mass (質量)" value={`${body.physical.mass_kg.toExponential(2)} kg`} />
-            <StatBox label="Gravity (重力)" value={`${body.physical.equatorial_gravity_m_s2} m/s²`} />
-            <StatBox label="Rotation (自転周期)" value={`${body.physical.sidereal_rotation_period_hours.toFixed(1)} hrs`} />
+            <StatBox label="Radius (半径)" value={`${formatNumber(body.physical.mean_radius_km, 0)} km`} />
+            <StatBox label="Mass (質量)" value={`${formatExp(body.physical.mass_kg)} kg`} />
+            <StatBox label="Gravity (重力)" value={`${formatFixed(body.physical.equatorial_gravity_m_s2, 2)} m/s²`} />
+            <StatBox label="Rotation (自転周期)" value={`${formatFixed(body.physical.sidereal_rotation_period_hours, 1)} hrs`} />
             <StatBox label="Axial Tilt (赤道傾斜角)" value={`${body.physical.axial_tilt_deg ?? 'N/A'}°`} />
             <StatBox label="Mean Temp (平均温度)" value={`${body.temperature.mean_surface_temp_K ?? 'N/A'} K`} />
           </div>
@@ -61,10 +89,10 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
                Orbital Parameters (軌道要素)
             </h4>
             <div className="grid grid-cols-2 gap-3">
-              <StatBox label="Period (公転周期)" value={`${body.orbit.sidereal_orbital_period_years?.toFixed(2)} yrs`} />
-              <StatBox label="Distance (軌道長半径)" value={`${body.orbit.elements.semi_major_axis_au?.toFixed(3)} AU`} />
-              <StatBox label="Eccentricity (離心率)" value={`${body.orbit.elements.eccentricity?.toFixed(4)}`} />
-              <StatBox label="Inclination (軌道傾斜角)" value={`${body.orbit.elements.inclination_deg?.toFixed(2)}°`} />
+              <StatBox label="Period (公転周期)" value={`${formatFixed(body.orbit.sidereal_orbital_period_years, 3)} yrs`} />
+              <StatBox label="Distance (軌道長半径)" value={`${formatFixed(body.orbit.elements.semi_major_axis_au, 4)} AU`} />
+              <StatBox label="Eccentricity (離心率)" value={`${formatFixed(body.orbit.elements.eccentricity, 4)}`} />
+              <StatBox label="Inclination (軌道傾斜角)" value={`${formatFixed(body.orbit.elements.inclination_deg, 2)}°`} />
             </div>
           </div>
         )}

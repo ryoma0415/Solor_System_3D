@@ -1,14 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-import { OrbitalElements, OrbitData } from '../types';
+import { OrbitData } from '../types';
 import { calculateOrbitPosition } from '../utils/orbitalPhysics';
 
 interface OrbitLineProps {
   orbit: OrbitData;
   color: string;
+  parentId?: string;
 }
 
-export const OrbitLine: React.FC<OrbitLineProps> = ({ orbit, color }) => {
+export const OrbitLine: React.FC<OrbitLineProps> = ({ orbit, color, parentId }) => {
+  const lineRef = useRef<THREE.Line>(null);
+  const parentPosRef = useRef(new THREE.Vector3());
+  const { scene } = useThree();
+
   const points = useMemo(() => {
     const pts: THREE.Vector3[] = [];
     const segments = 128;
@@ -27,8 +33,23 @@ export const OrbitLine: React.FC<OrbitLineProps> = ({ orbit, color }) => {
     return pts;
   }, [orbit]);
 
+  useFrame(() => {
+    if (!lineRef.current) return;
+    if (parentId) {
+      const parentObj = scene.getObjectByName(parentId);
+      if (parentObj) {
+        parentObj.getWorldPosition(parentPosRef.current);
+      } else {
+        parentPosRef.current.set(0, 0, 0);
+      }
+      lineRef.current.position.copy(parentPosRef.current);
+    } else {
+      lineRef.current.position.set(0, 0, 0);
+    }
+  });
+
   return (
-    <line>
+    <line ref={lineRef}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"

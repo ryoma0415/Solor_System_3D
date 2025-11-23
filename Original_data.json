@@ -1,0 +1,1228 @@
+{
+  "metadata": {
+    "schema_version": "1.0",
+    "coordinate_system": "heliocentric ecliptic J2000 (planets, dwarf planets, comets) / planetocentric (moons, ISS)",
+    "epoch_julian_day": 2451545.0,
+    "note_ja": "軌道要素は主にJ2000付近の平均値もしくは代表値です。可視化用途を想定した近似値であり、高精度な軌道計算にはJPL HorizonsやリアルタイムTLE等のデータを利用してください。衛星の軌道要素は簡略化し、主に公転周期と平均距離（半長軸）を収録しています。"
+  },
+  "bodies": [
+    {
+      "id": "sun",
+      "english_name": "Sun",
+      "japanese_name": "太陽",
+      "type": "star",
+      "parent_id": null,
+      "description": {
+        "overview_ja": "太陽は太陽系の中心にある恒星で、地球を含むすべての惑星や小天体は太陽の重力によって公転しています。太陽系全体の質量の99%以上を占め、そのエネルギーは主に水素の核融合によって生み出されています。",
+        "composition_ja": "質量の約70%が水素、約28%がヘリウムで構成され、残り数%が酸素・炭素・鉄などの重元素です。内部は核、放射層、対流層に分かれ、表面には光球・彩層・コロナが広がっています。",
+        "features_ja": "黒点やフレア、コロナ質量放出などの活動現象が見られ、これらは宇宙天気として地球環境や人工衛星に影響を与えます。太陽からの光と熱は、地球上の気候や生命維持に不可欠なエネルギー源です。"
+      },
+      "physical": {
+        "mean_radius_km": 695700.0,
+        "mass_kg": 1.9885e30,
+        "bulk_density_kg_m3": 1408.0,
+        "surface_gravity_m_s2": 274.0,
+        "escape_velocity_km_s": 617.7,
+        "geometric_albedo": null,
+        "bond_albedo": null,
+        "mean_temperature_K": null,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": 5772.0,
+        "luminosity_W": 3.828e26
+      },
+      "rotation": {
+        "sidereal_period_hours": 609.12,
+        "axis_tilt_deg_to_ecliptic": 7.25,
+        "is_retrograde": false
+      },
+      "orbit": null
+    },
+    {
+      "id": "mercury",
+      "english_name": "Mercury",
+      "japanese_name": "水星",
+      "type": "planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "水星は太陽に最も近い惑星で、小さく岩石質の天体です。大気はほとんどなく、昼と夜で極端な温度差があります。",
+        "composition_ja": "大きな鉄の核と比較的薄いケイ酸塩マントル・地殻から構成されており、惑星全体に対する金属核の割合が他の地球型惑星に比べて非常に大きいのが特徴です。",
+        "features_ja": "表面はクレーターに覆われ、月によく似た外観を持ちます。自転と公転が3:2の共鳴関係にあり、公転2周する間に自転3回を行うという特殊な自転状態にあります。"
+      },
+      "physical": {
+        "mean_radius_km": 2439.7,
+        "mass_kg": 3.3011e23,
+        "bulk_density_kg_m3": 5427.0,
+        "surface_gravity_m_s2": 3.7,
+        "escape_velocity_km_s": 4.25,
+        "geometric_albedo": 0.142,
+        "bond_albedo": 0.088,
+        "mean_temperature_K": 440.0,
+        "min_temperature_K": 100.0,
+        "max_temperature_K": 700.0,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 1407.5,
+        "axis_tilt_deg_to_ecliptic": 0.03,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素（主にNASA/JPL公表値に基づく）",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.387098,
+        "eccentricity": 0.205630,
+        "inclination_deg": 7.0049,
+        "longitude_of_ascending_node_deg": 48.331,
+        "longitude_of_perihelion_deg": 77.456,
+        "argument_of_periapsis_deg": 29.124,
+        "mean_longitude_deg": 252.251,
+        "mean_anomaly_deg": 174.796,
+        "sidereal_orbital_period_days": 87.9691
+      }
+    },
+    {
+      "id": "venus",
+      "english_name": "Venus",
+      "japanese_name": "金星",
+      "type": "planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "金星は地球とほぼ同じ大きさの岩石惑星で、非常に厚い二酸化炭素大気と硫酸の雲に覆われた高温高圧の環境を持ちます。",
+        "composition_ja": "内部構造は地球と類似しており、鉄の核とケイ酸塩マントル・地殻から構成されていると考えられています。表面は玄武岩質の溶岩平原や大規模な火山地形が広がっています。",
+        "features_ja": "自転方向が他の惑星と逆（逆行自転）で、しかも非常にゆっくりと自転しています。強い温室効果により地表温度は約730Kに達し、鉛も溶けるほどの高温です。"
+      },
+      "physical": {
+        "mean_radius_km": 6051.8,
+        "mass_kg": 4.8673e24,
+        "bulk_density_kg_m3": 5243.0,
+        "surface_gravity_m_s2": 8.87,
+        "escape_velocity_km_s": 10.36,
+        "geometric_albedo": 0.689,
+        "bond_albedo": 0.77,
+        "mean_temperature_K": 737.0,
+        "min_temperature_K": 700.0,
+        "max_temperature_K": 750.0,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 5832.0,
+        "axis_tilt_deg_to_ecliptic": 177.4,
+        "is_retrograde": true
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.723332,
+        "eccentricity": 0.006772,
+        "inclination_deg": 3.3947,
+        "longitude_of_ascending_node_deg": 76.680,
+        "longitude_of_perihelion_deg": 131.532,
+        "argument_of_periapsis_deg": 54.884,
+        "mean_longitude_deg": 181.979,
+        "mean_anomaly_deg": 50.115,
+        "sidereal_orbital_period_days": 224.701
+      }
+    },
+    {
+      "id": "earth",
+      "english_name": "Earth",
+      "japanese_name": "地球",
+      "type": "planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "地球は太陽から3番目の惑星で、液体の水が表面に安定して存在し、生命が繁栄している唯一の天体として知られています。",
+        "composition_ja": "内部は鉄・ニッケルからなる固体内核と液体外核、ケイ酸塩マントル、地殻から構成されています。表面の約7割は海洋に覆われ、大気は主に窒素と酸素で構成されています。",
+        "features_ja": "プレートテクトニクスによる地殻変動や炭素循環など、長期的な気候安定化メカニズムを持ちます。磁場は太陽風から大気と生命を保護する重要な役割を果たしています。"
+      },
+      "physical": {
+        "mean_radius_km": 6371.0,
+        "mass_kg": 5.97237e24,
+        "bulk_density_kg_m3": 5514.0,
+        "surface_gravity_m_s2": 9.80665,
+        "escape_velocity_km_s": 11.186,
+        "geometric_albedo": 0.434,
+        "bond_albedo": 0.306,
+        "mean_temperature_K": 288.0,
+        "min_temperature_K": 184.0,
+        "max_temperature_K": 330.0,
+        "effective_temperature_K": 255.0,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 23.9345,
+        "axis_tilt_deg_to_ecliptic": 23.44,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 1.00000011,
+        "eccentricity": 0.01671022,
+        "inclination_deg": 0.0,
+        "longitude_of_ascending_node_deg": -11.26064,
+        "longitude_of_perihelion_deg": 102.94719,
+        "argument_of_periapsis_deg": 102.94719,
+        "mean_longitude_deg": 100.46435,
+        "mean_anomaly_deg": 357.5291,
+        "sidereal_orbital_period_days": 365.256363
+      }
+    },
+    {
+      "id": "moon",
+      "english_name": "Moon",
+      "japanese_name": "月",
+      "type": "moon",
+      "parent_id": "earth",
+      "description": {
+        "overview_ja": "月は地球の唯一の天然衛星で、地球から見て最大かつ最も近い天体です。潮汐や地球自転の安定化に重要な役割を果たしています。",
+        "composition_ja": "内部は小さな鉄核、ケイ酸塩マントル、玄武岩質・斜長岩質地殻から構成されています。表面はレゴリスと呼ばれる粉状の破砕物質に覆われています。",
+        "features_ja": "表側には海と呼ばれる暗い玄武岩平原、裏側にはクレーターに富む高地が広がっています。地球と潮汐ロックしており、常に同じ面だけを地球に向けています。"
+      },
+      "physical": {
+        "mean_radius_km": 1737.4,
+        "mass_kg": 7.342e22,
+        "bulk_density_kg_m3": 3344.0,
+        "surface_gravity_m_s2": 1.62,
+        "escape_velocity_km_s": 2.38,
+        "geometric_albedo": 0.12,
+        "bond_albedo": 0.11,
+        "mean_temperature_K": 220.0,
+        "min_temperature_K": 40.0,
+        "max_temperature_K": 390.0,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 655.72,
+        "axis_tilt_deg_to_ecliptic": 6.68,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "earth",
+        "frame": "geocentric ecliptic J2000",
+        "reference": "近似的な平均軌道。月の実際の運動は多体摂動によりより複雑。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.00257,
+        "eccentricity": 0.0549,
+        "inclination_deg": 5.145,
+        "longitude_of_ascending_node_deg": 125.08,
+        "longitude_of_perihelion_deg": 318.15,
+        "argument_of_periapsis_deg": 318.15,
+        "mean_longitude_deg": 218.32,
+        "mean_anomaly_deg": 115.3654,
+        "sidereal_orbital_period_days": 27.3217
+      }
+    },
+    {
+      "id": "iss",
+      "english_name": "International Space Station",
+      "japanese_name": "国際宇宙ステーション",
+      "type": "artificial_satellite",
+      "parent_id": "earth",
+      "description": {
+        "overview_ja": "国際宇宙ステーション（ISS）は、多国間協力により建設・運用されている低軌道有人宇宙ステーションで、地球を周回しながら長期滞在実験や技術実証が行われています。",
+        "composition_ja": "アルミニウム合金や複合材からなるモジュール・トラス構造、太陽電池パドル、ラジエータ、ドッキング機構などから構成されています。内部には生命維持装置、科学実験ラック、居住区画、在軌サービス用の設備が備えられています。",
+        "features_ja": "地表から約400km上空、軌道傾斜角51.6度のほぼ円軌道で地球を約90分で一周し、1日におよそ15.5周公転します。微小重力環境を利用した材料・生命科学・天文観測などの実験や、将来の月・火星探査に向けた技術実証の拠点として機能しています。"
+      },
+      "physical": {
+        "mean_radius_km": null,
+        "mass_kg": 4.2e5,
+        "bulk_density_kg_m3": null,
+        "surface_gravity_m_s2": null,
+        "escape_velocity_km_s": null,
+        "geometric_albedo": null,
+        "bond_albedo": null,
+        "mean_temperature_K": null,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null,
+        "dimensions_m": {
+          "length": 80.0,
+          "span": 109.0,
+          "height": 45.0
+        }
+      },
+      "rotation": {
+        "sidereal_period_hours": null,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "earth",
+        "reference": "2020年代の典型的なISS軌道（高度370–460km、傾斜角51.6°）の近似値。実際の軌道はTLEに従い時々刻々変化する。",
+        "epoch_julian_day": 2461000.5,
+        "semi_major_axis_au": 0.000045362,
+        "eccentricity": 0.001,
+        "inclination_deg": 51.6,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 0.0646
+      }
+    },
+    {
+      "id": "mars",
+      "english_name": "Mars",
+      "japanese_name": "火星",
+      "type": "planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "火星は太陽から4番目の惑星で、赤い外観から「赤い惑星」と呼ばれます。薄い二酸化炭素大気と広大な火山・渓谷・極冠を持ちます。",
+        "composition_ja": "内部は鉄核、ケイ酸塩マントルと地殻から構成され、表面は玄武岩質の岩石と風で運ばれた酸化鉄を含む砂に覆われています。氷は極冠や地下に存在すると考えられています。",
+        "features_ja": "太陽系最大の火山オリンポス山や、大峡谷系マリネリス峡谷など、スケールの大きな地形が存在します。かつて液体の水が表面を流れていた証拠が多数見つかっており、過去あるいは現在の生命存在可能性が探査の焦点となっています。"
+      },
+      "physical": {
+        "mean_radius_km": 3389.5,
+        "mass_kg": 6.4171e23,
+        "bulk_density_kg_m3": 3933.0,
+        "surface_gravity_m_s2": 3.71,
+        "escape_velocity_km_s": 5.03,
+        "geometric_albedo": 0.170,
+        "bond_albedo": 0.25,
+        "mean_temperature_K": 210.0,
+        "min_temperature_K": 130.0,
+        "max_temperature_K": 308.0,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 24.6229,
+        "axis_tilt_deg_to_ecliptic": 25.19,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 1.523679,
+        "eccentricity": 0.0934,
+        "inclination_deg": 1.850,
+        "longitude_of_ascending_node_deg": 49.558,
+        "longitude_of_perihelion_deg": 336.04084,
+        "argument_of_periapsis_deg": 286.502,
+        "mean_longitude_deg": 355.45332,
+        "mean_anomaly_deg": 19.373,
+        "sidereal_orbital_period_days": 686.971
+      }
+    },
+    {
+      "id": "phobos",
+      "english_name": "Phobos",
+      "japanese_name": "フォボス",
+      "type": "moon",
+      "parent_id": "mars",
+      "description": {
+        "overview_ja": "フォボスは火星に最も近い内側の衛星で、不規則な形状を持つ小さな天体です。表面は衝突クレーターと溝状構造で覆われ、非常に暗い外観を示します。",
+        "composition_ja": "炭素質小惑星に似た暗い岩石と、多くの空隙を含む低密度の内部構造から構成されていると考えられています。内部に氷が含まれている可能性も指摘されていますが、表層のレゴリスには水和鉱物はほとんど見られません。",
+        "features_ja": "火星からの距離が近いため、火星の空では短時間で東から西へと急速に移動する小さな「月」として見えます。火星との潮汐相互作用により軌道は徐々に内側に落ち込んでおり、数千万年後には崩壊してリングを形成するか火星に落下すると予測されています。巨大クレーター・スティックニーとそこから放射状に伸びる溝は、内部構造や形成史を探る重要な手がかりです。"
+      },
+      "physical": {
+        "mean_radius_km": 11.15,
+        "mass_kg": 1.06e16,
+        "bulk_density_kg_m3": 1824.0,
+        "surface_gravity_m_s2": 0.0057,
+        "escape_velocity_km_s": 0.011,
+        "geometric_albedo": 0.071,
+        "bond_albedo": null,
+        "mean_temperature_K": null,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 7.65,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "mars",
+        "frame": "areocentric (planetocentric) equatorial, 近似",
+        "reference": "フォボスの平均軌道（半長軸と公転周期のみを使用した簡略モデル）。実際の軌道はわずかに偏心・傾斜している。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.000062668,
+        "eccentricity": null,
+        "inclination_deg": null,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 0.3189
+      }
+    },
+    {
+      "id": "deimos",
+      "english_name": "Deimos",
+      "japanese_name": "ダイモス",
+      "type": "moon",
+      "parent_id": "mars",
+      "description": {
+        "overview_ja": "ダイモスは火星の外側を回る小さな衛星で、フォボスよりも小さく、より滑らかで丸みを帯びた外観を持ちます。",
+        "composition_ja": "炭素質小惑星に似た暗い岩石と、厚いレゴリス（粉状破砕物）から構成されていると考えられています。密度が低く、多くの空隙を含むラブルパイル状の内部構造を持つ可能性があります。",
+        "features_ja": "火星からの距離がフォボスよりもかなり遠いため、火星の空ではゆっくりと移動し、ほとんど点のように見えます。クレーターは存在しますが、粉状物質で部分的に埋められているため、全体として滑らかな地形となっています。"
+      },
+      "physical": {
+        "mean_radius_km": 6.27,
+        "mass_kg": 1.51e15,
+        "bulk_density_kg_m3": 1465.0,
+        "surface_gravity_m_s2": 0.0026,
+        "escape_velocity_km_s": 0.0057,
+        "geometric_albedo": 0.07,
+        "bond_albedo": null,
+        "mean_temperature_K": 233.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 30.3,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "mars",
+        "frame": "areocentric (planetocentric) equatorial, 近似",
+        "reference": "ダイモスの平均軌道（半長軸と公転周期のみを使用した簡略モデル）。実際の軌道はほぼ円軌道で傾斜も小さい。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.000156820,
+        "eccentricity": null,
+        "inclination_deg": null,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 1.2625
+      }
+    },
+    {
+      "id": "jupiter",
+      "english_name": "Jupiter",
+      "japanese_name": "木星",
+      "type": "planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "木星は太陽系最大の惑星で、水素とヘリウムを主成分とするガス巨大惑星です。多数の衛星と微弱な環を持ちます。",
+        "composition_ja": "主成分は水素（約90%）とヘリウム（約10%）であり、内部には金属水素層と岩石・氷からなる核が存在すると考えられています。大気にはアンモニア・メタン・水蒸気などの痕跡成分も含まれます。",
+        "features_ja": "大赤斑と呼ばれる数百年以上続く巨大な高気圧嵐をはじめ、多数の帯状構造や渦が見られます。強い磁場と放射線帯を持ち、その影響は衛星環境にも及びます。"
+      },
+      "physical": {
+        "mean_radius_km": 69911.0,
+        "mass_kg": 1.8982e27,
+        "bulk_density_kg_m3": 1326.0,
+        "surface_gravity_m_s2": 24.79,
+        "escape_velocity_km_s": 59.5,
+        "geometric_albedo": 0.538,
+        "bond_albedo": 0.343,
+        "mean_temperature_K": 165.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": 110.0,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 9.925,
+        "axis_tilt_deg_to_ecliptic": 3.13,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 5.2044,
+        "eccentricity": 0.0489,
+        "inclination_deg": 1.304,
+        "longitude_of_ascending_node_deg": 100.556,
+        "longitude_of_perihelion_deg": 14.75385,
+        "argument_of_periapsis_deg": 273.867,
+        "mean_longitude_deg": 34.40438,
+        "mean_anomaly_deg": 19.65053,
+        "sidereal_orbital_period_days": 4332.59
+      }
+    },
+    {
+      "id": "io",
+      "english_name": "Io",
+      "japanese_name": "イオ",
+      "type": "moon",
+      "parent_id": "jupiter",
+      "description": {
+        "overview_ja": "イオは木星の最も内側を回るガリレオ衛星で、太陽系で最も火山活動が活発な天体です。表面は硫黄や溶岩に覆われ、黄色やオレンジ色など鮮やかな色彩を呈します。",
+        "composition_ja": "内部はケイ酸塩岩石からなるマントルと地殻、中心の鉄または硫化鉄の核から構成されていると考えられています。水や氷はほとんど含まれず、表面は硫黄や二酸化硫黄の霜や氷で覆われています。",
+        "features_ja": "木星と他のガリレオ衛星（エウロパ・ガニメデ）からの潮汐力により強く加熱されており、数百の火山が活動しています。噴煙は数百kmの高さに達し、衝突クレーターはほとんど見られません。"
+      },
+      "physical": {
+        "mean_radius_km": 1821.3,
+        "mass_kg": 8.9319e22,
+        "bulk_density_kg_m3": 3530.0,
+        "surface_gravity_m_s2": 1.796,
+        "escape_velocity_km_s": 2.558,
+        "geometric_albedo": null,
+        "bond_albedo": null,
+        "mean_temperature_K": 110.0,
+        "min_temperature_K": 90.0,
+        "max_temperature_K": 130.0,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 42.456,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "jupiter",
+        "frame": "jovicentric equatorial, 近似",
+        "reference": "イオの平均軌道（半長軸と公転周期を主に使用）。実際の軌道はわずかに偏心・傾斜している。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.002818890,
+        "eccentricity": null,
+        "inclination_deg": null,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 1.769
+      }
+    },
+    {
+      "id": "europa",
+      "english_name": "Europa",
+      "japanese_name": "エウロパ",
+      "type": "moon",
+      "parent_id": "jupiter",
+      "description": {
+        "overview_ja": "エウロパはガリレオ衛星のひとつで、非常に滑らかな氷の表面と、その下に存在すると考えられる全球的な液体の海で知られています。生命存在の可能性が高い候補天体のひとつです。",
+        "composition_ja": "内部は岩石質のマントルと金属核、その外側に液体の水の海と厚い水氷の殻があると考えられています。表面は水氷でできており、少量の塩類や有機物が混じっている可能性があります。",
+        "features_ja": "表面には多数の筋状模様（リネア）や割れ目が走り、衝突クレーターが極端に少ないことから、比較的若く活動的な表面であると示唆されています。潮汐加熱によって地下海にエネルギーが供給されていると考えられ、探査機ミッションの主要ターゲットとなっています。"
+      },
+      "physical": {
+        "mean_radius_km": 1560.8,
+        "mass_kg": 4.7998e22,
+        "bulk_density_kg_m3": 3013.0,
+        "surface_gravity_m_s2": 1.31,
+        "escape_velocity_km_s": 2.025,
+        "geometric_albedo": 0.67,
+        "bond_albedo": null,
+        "mean_temperature_K": 102.0,
+        "min_temperature_K": 50.0,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 85.224,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "jupiter",
+        "frame": "jovicentric equatorial, 近似",
+        "reference": "エウロパの平均軌道（半長軸と公転周期を主に使用）。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.004485585,
+        "eccentricity": null,
+        "inclination_deg": null,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 3.551
+      }
+    },
+    {
+      "id": "ganymede",
+      "english_name": "Ganymede",
+      "japanese_name": "ガニメデ",
+      "type": "moon",
+      "parent_id": "jupiter",
+      "description": {
+        "overview_ja": "ガニメデは木星最大の衛星であり、太陽系で最大の衛星です。水氷と岩石からなる大型の氷天体で、固有の磁場を持つ唯一の衛星として知られています。",
+        "composition_ja": "内部は岩石と金属からなる核、その外側に高圧の水や氷からなるマントルがあり、複数層からなる地下海が存在すると考えられています。表面は明るい溝状地形と暗いクレーター地形が混在し、主に水氷で構成されています。",
+        "features_ja": "表面の溝状構造は、内部のテクトニクスや氷の変形によって形成されたと考えられています。木星の強い磁場の中で自前の磁場を持つため、衛星周囲に小規模な磁気圏が形成されています。"
+      },
+      "physical": {
+        "mean_radius_km": 2634.1,
+        "mass_kg": 1.4819e23,
+        "bulk_density_kg_m3": 1936.0,
+        "surface_gravity_m_s2": 1.428,
+        "escape_velocity_km_s": 2.741,
+        "geometric_albedo": 0.43,
+        "bond_albedo": null,
+        "mean_temperature_K": 110.0,
+        "min_temperature_K": 70.0,
+        "max_temperature_K": 152.0,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 171.72,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "jupiter",
+        "frame": "jovicentric equatorial, 近似",
+        "reference": "ガニメデの平均軌道（半長軸と公転周期を主に使用）。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.007155262,
+        "eccentricity": null,
+        "inclination_deg": null,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 7.155
+      }
+    },
+    {
+      "id": "callisto",
+      "english_name": "Callisto",
+      "japanese_name": "カリスト",
+      "type": "moon",
+      "parent_id": "jupiter",
+      "description": {
+        "overview_ja": "カリストは木星の第4ガリレオ衛星で、表面全体が古い衝突クレーターに覆われた天体です。太陽系で最も古い表面の一つと考えられています。",
+        "composition_ja": "平均密度から、岩石と水氷がほぼ同程度混ざり合った内部構造を持つと考えられています。内部の分化はあまり進んでおらず、外層には水氷と暗い炭素質物質が混じった地殻が存在します。",
+        "features_ja": "巨大な多重同心円クレーター構造（ヴァルハラなど）が特徴的で、古い衝突史が記録されています。深部に塩分を含んだ液体の海が存在する可能性もあり、ガニメデやエウロパと同様に地下海の有無が研究されています。"
+      },
+      "physical": {
+        "mean_radius_km": 2410.3,
+        "mass_kg": 1.0759e23,
+        "bulk_density_kg_m3": 1860.0,
+        "surface_gravity_m_s2": 1.235,
+        "escape_velocity_km_s": 2.441,
+        "geometric_albedo": 0.22,
+        "bond_albedo": null,
+        "mean_temperature_K": null,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 400.536,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "jupiter",
+        "frame": "jovicentric equatorial, 近似",
+        "reference": "カリストの平均軌道（半長軸と公転周期を主に使用）。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.012585072,
+        "eccentricity": null,
+        "inclination_deg": null,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 16.689
+      }
+    },
+    {
+      "id": "saturn",
+      "english_name": "Saturn",
+      "japanese_name": "土星",
+      "type": "planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "土星は太陽系で2番目に大きなガス巨大惑星で、壮大な環系でよく知られています。",
+        "composition_ja": "主成分は水素とヘリウムで、木星に比べて全体密度が低く、水よりも軽い平均密度を持ちます。内部には金属水素や氷・岩石からなる核が存在すると考えられています。",
+        "features_ja": "明るく薄い主リングと、無数の小さなリングや隙間からなる複雑な環構造を持ちます。多くの衛星が存在し、その中にはタイタンやエンケラドスのような科学的に非常に興味深い天体も含まれます。"
+      },
+      "physical": {
+        "mean_radius_km": 58232.0,
+        "mass_kg": 5.6834e26,
+        "bulk_density_kg_m3": 687.0,
+        "surface_gravity_m_s2": 10.44,
+        "escape_velocity_km_s": 35.5,
+        "geometric_albedo": 0.499,
+        "bond_albedo": 0.342,
+        "mean_temperature_K": 134.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": 95.0,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 10.7,
+        "axis_tilt_deg_to_ecliptic": 26.73,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 9.5826,
+        "eccentricity": 0.0565,
+        "inclination_deg": 2.485,
+        "longitude_of_ascending_node_deg": 113.715,
+        "longitude_of_perihelion_deg": 92.43194,
+        "argument_of_periapsis_deg": 339.392,
+        "mean_longitude_deg": 49.94432,
+        "mean_anomaly_deg": 317.0207,
+        "sidereal_orbital_period_days": 10759.22
+      }
+    },
+    {
+      "id": "titan",
+      "english_name": "Titan",
+      "japanese_name": "タイタン",
+      "type": "moon",
+      "parent_id": "saturn",
+      "description": {
+        "overview_ja": "タイタンは土星最大の衛星で、濃い窒素大気と有機物の霧に包まれた惑星様の世界です。地表には液体メタンやエタンの湖と海が存在します。",
+        "composition_ja": "内部は岩石核と、それを取り巻く水氷・高圧氷・アンモニア混合物の層から構成されていると考えられます。大気は主に窒素で、少量のメタンやその他の炭化水素が含まれています。",
+        "features_ja": "地表には河川やデルタ、砂丘など地球とよく似た侵食・堆積地形が広がっていますが、そこで循環している液体は水ではなく炭化水素です。地下に水の海が存在すると考えられ、生命存在可能性の点でも注目されています。"
+      },
+      "physical": {
+        "mean_radius_km": 2575.0,
+        "mass_kg": 1.3452e23,
+        "bulk_density_kg_m3": 1880.0,
+        "surface_gravity_m_s2": 1.35,
+        "escape_velocity_km_s": 2.64,
+        "geometric_albedo": 0.22,
+        "bond_albedo": null,
+        "mean_temperature_K": 93.7,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 382.56,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "saturn",
+        "frame": "saturncentric equatorial, 近似",
+        "reference": "タイタンの平均軌道（平均距離と公転周期を使用）。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.008167563,
+        "eccentricity": null,
+        "inclination_deg": null,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 15.94
+      }
+    },
+    {
+      "id": "enceladus",
+      "english_name": "Enceladus",
+      "japanese_name": "エンケラドス",
+      "type": "moon",
+      "parent_id": "saturn",
+      "description": {
+        "overview_ja": "エンケラドスは土星の中規模衛星のひとつで、太陽系で最も反射率が高い非常に明るい表面を持ちます。南極付近から噴出する水蒸気と氷粒子のジェットで有名です。",
+        "composition_ja": "内部は主に水氷からなり、その下に岩石質の核が存在すると考えられています。平均密度や重力場の解析から、氷殻の下に塩分を含んだ液体の海が存在する可能性が高いとされています。",
+        "features_ja": "南極の『虎縞』と呼ばれる割れ目から、水蒸気や氷粒子が宇宙空間へ噴き出しており、その一部は土星のEリングの供給源となっています。潮汐加熱と地下海という、生命存在に重要と考えられる条件がそろった天体として注目されています。"
+      },
+      "physical": {
+        "mean_radius_km": 252.1,
+        "mass_kg": 1.08022e20,
+        "bulk_density_kg_m3": 1610.0,
+        "surface_gravity_m_s2": 0.111,
+        "escape_velocity_km_s": 0.238,
+        "geometric_albedo": 1.0,
+        "bond_albedo": null,
+        "mean_temperature_K": 75.0,
+        "min_temperature_K": 32.9,
+        "max_temperature_K": 145.0,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 32.9,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "saturn",
+        "frame": "saturncentric equatorial, 近似",
+        "reference": "エンケラドスの平均軌道（平均距離と公転周期を使用）。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.001590932,
+        "eccentricity": null,
+        "inclination_deg": null,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 1.3708
+      }
+    },
+    {
+      "id": "uranus",
+      "english_name": "Uranus",
+      "japanese_name": "天王星",
+      "type": "planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "天王星は氷巨惑星に分類されるガス惑星で、大きく横倒しになった自転軸を持つのが特徴です。",
+        "composition_ja": "内部は水・アンモニア・メタンなどの「氷」に富んだマントルと、岩石・氷・金属からなる核があると考えられています。大気は水素・ヘリウムを主体とし、メタンが青緑色の外観を与えています。",
+        "features_ja": "自転軸が公転軌道面に対して約98度傾いており、ほぼ横倒しで自転しているため、極端な季節変化が起こります。微弱なリングと多数の衛星を持ちます。"
+      },
+      "physical": {
+        "mean_radius_km": 25362.0,
+        "mass_kg": 8.6810e25,
+        "bulk_density_kg_m3": 1271.0,
+        "surface_gravity_m_s2": 8.69,
+        "escape_velocity_km_s": 21.3,
+        "geometric_albedo": 0.488,
+        "bond_albedo": 0.30,
+        "mean_temperature_K": 76.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": 59.0,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 17.24,
+        "axis_tilt_deg_to_ecliptic": 97.77,
+        "is_retrograde": true
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 19.2184,
+        "eccentricity": 0.046381,
+        "inclination_deg": 0.773,
+        "longitude_of_ascending_node_deg": 74.006,
+        "longitude_of_perihelion_deg": 170.96424,
+        "argument_of_periapsis_deg": 96.998857,
+        "mean_longitude_deg": 313.23218,
+        "mean_anomaly_deg": 142.2386,
+        "sidereal_orbital_period_days": 30685.4
+      }
+    },
+    {
+      "id": "neptune",
+      "english_name": "Neptune",
+      "japanese_name": "海王星",
+      "type": "planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "海王星は太陽系で最も外側の巨大惑星で、強い風と暗い大斑点などの大気活動が観測されています。",
+        "composition_ja": "天王星と同様に氷巨惑星に分類され、水・アンモニア・メタンなどの「氷」に富んだマントルと岩石・金属の核を持つと考えられています。大気は主に水素とヘリウム、少量のメタンからなります。",
+        "features_ja": "太陽から遠いにもかかわらず内部熱流が大きく、上層大気には太陽系で最も高速なジェット気流が存在します。薄いリングと多数の衛星を持ち、その中でもトリトンは逆行軌道を持つ特殊な衛星です。"
+      },
+      "physical": {
+        "mean_radius_km": 24622.0,
+        "mass_kg": 1.02413e26,
+        "bulk_density_kg_m3": 1638.0,
+        "surface_gravity_m_s2": 11.15,
+        "escape_velocity_km_s": 23.5,
+        "geometric_albedo": 0.442,
+        "bond_albedo": 0.29,
+        "mean_temperature_K": 72.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": 59.0,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 16.11,
+        "axis_tilt_deg_to_ecliptic": 28.32,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 30.1104,
+        "eccentricity": 0.009456,
+        "inclination_deg": 1.769,
+        "longitude_of_ascending_node_deg": 131.784,
+        "longitude_of_perihelion_deg": 44.97135,
+        "argument_of_periapsis_deg": 273.187,
+        "mean_longitude_deg": 304.88003,
+        "mean_anomaly_deg": 256.228,
+        "sidereal_orbital_period_days": 60189.0
+      }
+    },
+    {
+      "id": "triton",
+      "english_name": "Triton",
+      "japanese_name": "トリトン",
+      "type": "moon",
+      "parent_id": "neptune",
+      "description": {
+        "overview_ja": "トリトンは海王星最大の衛星で、太陽系の大きな衛星の中で唯一、逆行軌道を持つ天体です。氷に覆われた若い表面と希薄な窒素大気を持ちます。",
+        "composition_ja": "密度から、およそ30〜45%の水氷と残りの岩石・金属から構成されていると推定されています。表面には窒素氷が広く分布し、二酸化炭素やメタンの氷、水氷や有機物も混在しています。",
+        "features_ja": "表面には氷火山やクライオボルケーノ活動によると考えられる平原、極めてクレーターの少ない若い地域などが存在します。起源はカイパーベルト由来の準惑星が捕獲されたものと考えられ、外縁太陽系の進化を理解する上で重要な天体です。"
+      },
+      "physical": {
+        "mean_radius_km": 1353.4,
+        "mass_kg": 2.14e22,
+        "bulk_density_kg_m3": 2059.0,
+        "surface_gravity_m_s2": 0.779,
+        "escape_velocity_km_s": 1.45,
+        "geometric_albedo": 0.76,
+        "bond_albedo": null,
+        "mean_temperature_K": 38.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 141.048,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": true
+      },
+      "orbit": {
+        "central_body": "neptune",
+        "frame": "neptunecentric, 近似",
+        "reference": "トリトンのほぼ円形な逆行軌道の代表値。半長軸と公転周期、傾斜角のみ反映。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.002371692,
+        "eccentricity": 0.00002,
+        "inclination_deg": 129.8,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 5.877
+      }
+    },
+    {
+      "id": "ceres",
+      "english_name": "Ceres",
+      "japanese_name": "ケレス",
+      "type": "dwarf_planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "ケレスは小惑星帯最大の天体であり、準惑星にも分類されています。ほぼ球形の形状を持ちます。",
+        "composition_ja": "内部は岩石と水氷の混合体で、分化して岩石コアと水氷マントルを持つ可能性があります。表面には炭酸塩や含水鉱物も検出されています。",
+        "features_ja": "表面の明るい斑点（特にオッカトル・クレーター内）は炭酸塩などの塩類の堆積物であり、過去または現在の地下液体活動の証拠と考えられています。"
+      },
+      "physical": {
+        "mean_radius_km": 473.0,
+        "mass_kg": 9.393e20,
+        "bulk_density_kg_m3": 2162.0,
+        "surface_gravity_m_s2": 0.27,
+        "escape_velocity_km_s": 0.51,
+        "geometric_albedo": 0.09,
+        "bond_albedo": null,
+        "mean_temperature_K": 167.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 9.074,
+        "axis_tilt_deg_to_ecliptic": 4.0,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 2.767,
+        "eccentricity": 0.078,
+        "inclination_deg": 10.59,
+        "longitude_of_ascending_node_deg": 80.3,
+        "longitude_of_perihelion_deg": 73.6,
+        "argument_of_periapsis_deg": 73.6,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 1680.0
+      }
+    },
+    {
+      "id": "pluto",
+      "english_name": "Pluto",
+      "japanese_name": "冥王星",
+      "type": "dwarf_planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "冥王星はカイパーベルトに属する準惑星で、かつては太陽系第9惑星とされていました。氷と岩石からなる小型の世界です。",
+        "composition_ja": "内部は岩石質コアと水氷マントルから構成され、表面には窒素・メタン・一酸化炭素などの揮発性氷が覆っています。低温環境のため、これらの物質は固体・氷として存在します。",
+        "features_ja": "ハート型のスプートニク平原など、氷の流動や昇華・凝結に由来する多様な地形が存在します。最大衛星カロンとはほぼ二重天体系を形成しており、系全体の重心は冥王星の外側にあります。"
+      },
+      "physical": {
+        "mean_radius_km": 1188.3,
+        "mass_kg": 1.303e22,
+        "bulk_density_kg_m3": 1850.0,
+        "surface_gravity_m_s2": 0.62,
+        "escape_velocity_km_s": 1.21,
+        "geometric_albedo": 0.52,
+        "bond_albedo": null,
+        "mean_temperature_K": 44.0,
+        "min_temperature_K": 33.0,
+        "max_temperature_K": 55.0,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 153.2935,
+        "axis_tilt_deg_to_ecliptic": 119.6,
+        "is_retrograde": true
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素（冥王星は長期的に軌道が摂動を受ける）",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 39.482,
+        "eccentricity": 0.2488,
+        "inclination_deg": 17.16,
+        "longitude_of_ascending_node_deg": 110.299,
+        "longitude_of_perihelion_deg": 224.0,
+        "argument_of_periapsis_deg": 113.834,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": 14.53,
+        "sidereal_orbital_period_days": 90560.0
+      }
+    },
+    {
+      "id": "charon",
+      "english_name": "Charon",
+      "japanese_name": "カロン",
+      "type": "moon",
+      "parent_id": "pluto",
+      "description": {
+        "overview_ja": "カロンは冥王星最大の衛星で、その大きさと質量の比から冥王星とほぼ二重天体系を成しています。表面は主に水氷からなり、明暗のコントラストが強い地形が見られます。",
+        "composition_ja": "密度から、およそ55%の岩石と45%の水氷で構成されていると推定されています。表面には水氷に加え、アンモニアを含む氷や有機物、最近の観測では二酸化炭素や過酸化水素の氷も検出されています。",
+        "features_ja": "冥王星とカロンは互いに潮汐ロックしており、常に同じ面を向け合っています。巨大な峡谷系や、内部海の凍結に伴う膨張で形成されたと考えられるリフト地形など、ダイナミックな過去の地質活動の痕跡が見られます。"
+      },
+      "physical": {
+        "mean_radius_km": 606.0,
+        "mass_kg": 1.586e21,
+        "bulk_density_kg_m3": 1710.0,
+        "surface_gravity_m_s2": 0.288,
+        "escape_velocity_km_s": 0.59,
+        "geometric_albedo": 0.38,
+        "bond_albedo": 0.25,
+        "mean_temperature_K": 53.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 153.29,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "pluto",
+        "frame": "Pluto–Charon系の重心を近似",
+        "reference": "カロンのほぼ円形な共回転軌道。半長軸は冥王星からの平均距離に基づく。",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 0.000130991,
+        "eccentricity": 0.000161,
+        "inclination_deg": null,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 6.387
+      }
+    },
+    {
+      "id": "haumea",
+      "english_name": "Haumea",
+      "japanese_name": "ハウメア",
+      "type": "dwarf_planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "ハウメアはカイパーベルトにある準惑星で、非常に高速自転するため強く扁平した形状を持ちます。",
+        "composition_ja": "内部は岩石質コアと厚い水氷マントルから構成されていると考えられ、表面はほぼ純粋な水氷に覆われています。",
+        "features_ja": "高速自転（約4時間）により、三軸不等のラグビーボール型の形状をしています。リングと少なくとも2つの衛星を持ち、衝突起源の天体群（ハウメア族）の中心天体と考えられています。"
+      },
+      "physical": {
+        "mean_radius_km": 816.0,
+        "mass_kg": 4.006e21,
+        "bulk_density_kg_m3": 1885.0,
+        "surface_gravity_m_s2": 0.44,
+        "escape_velocity_km_s": 0.9,
+        "geometric_albedo": 0.51,
+        "bond_albedo": null,
+        "mean_temperature_K": 32.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 3.915,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 43.218,
+        "eccentricity": 0.18874,
+        "inclination_deg": 28.22,
+        "longitude_of_ascending_node_deg": 122.0,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": 240.0,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 1.038e5
+      }
+    },
+    {
+      "id": "makemake",
+      "english_name": "Makemake",
+      "japanese_name": "マケマケ",
+      "type": "dwarf_planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "マケマケはカイパーベルトにある大型の準惑星で、冥王星やエリスと同規模の外縁天体です。",
+        "composition_ja": "表面にはメタン・エタン・窒素などの揮発性氷が存在すると考えられており、低温でこれらが固体の形で安定しています。内部は岩石と氷の混合体と推定されています。",
+        "features_ja": "比較的高いアルベドを持ち、赤みを帯びた色を示します。希薄な季節的大気が一時的に存在する可能性が指摘されています。"
+      },
+      "physical": {
+        "mean_radius_km": 715.0,
+        "mass_kg": 3.1e21,
+        "bulk_density_kg_m3": 1740.0,
+        "surface_gravity_m_s2": 0.5,
+        "escape_velocity_km_s": 0.9,
+        "geometric_albedo": 0.77,
+        "bond_albedo": null,
+        "mean_temperature_K": 30.0,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 22.48,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素",
+        "epoch_julian_day": 2451545.0,
+        "semi_major_axis_au": 45.791,
+        "eccentricity": 0.159,
+        "inclination_deg": 29.0,
+        "longitude_of_ascending_node_deg": null,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": null,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 112897.0
+      }
+    },
+    {
+      "id": "eris",
+      "english_name": "Eris",
+      "japanese_name": "エリス",
+      "type": "dwarf_planet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "エリスは散乱円盤天体に属する準惑星で、冥王星と同等以上の質量を持つ遠方の氷の世界です。",
+        "composition_ja": "高い密度から、内部は岩石成分が優勢で、その外側を比較的薄い氷層が覆っていると考えられています。表面は主にメタン氷が占め、非常に明るいアルベドを持ちます。",
+        "features_ja": "遠日点では太陽から100天文単位以上離れ、近日点から遠日点までの温度変化に伴い、表面の揮発性氷が昇華・凝結を繰り返すと考えられています。小型の衛星ディスノミアを持ちます。"
+      },
+      "physical": {
+        "mean_radius_km": 1163.0,
+        "mass_kg": 1.6466e22,
+        "bulk_density_kg_m3": 2520.0,
+        "surface_gravity_m_s2": 0.82,
+        "escape_velocity_km_s": 1.38,
+        "geometric_albedo": 0.96,
+        "bond_albedo": null,
+        "mean_temperature_K": 30.0,
+        "min_temperature_K": 27.0,
+        "max_temperature_K": 43.0,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 25.9,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": false
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "近似的なJ2000準拠のケプラー要素（散乱円盤天体のため長期的に変動しうる）",
+        "epoch_julian_day": 2461000.5,
+        "semi_major_axis_au": 67.781,
+        "eccentricity": 0.44,
+        "inclination_deg": 44.04,
+        "longitude_of_ascending_node_deg": 35.95,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": 151.5,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 203830.0
+      }
+    },
+    {
+      "id": "halley_comet",
+      "english_name": "Halley's Comet",
+      "japanese_name": "ハレー彗星",
+      "type": "comet",
+      "parent_id": "sun",
+      "description": {
+        "overview_ja": "ハレー彗星は約75年周期で太陽の周りを公転する代表的な周期彗星で、肉眼でも観測される数少ない彗星の一つです。歴史記録に繰り返し登場し、人類が古くから観測してきた天体です。",
+        "composition_ja": "核は水氷・一酸化炭素・二酸化炭素・アンモニア・メタンなどの揮発性氷と、ケイ酸塩や炭素に富む有機物を含む塵が混ざった「汚れた雪玉」として構成されています。平均密度が非常に低いことから、多数の塊が緩く集まったラブルパイル構造と考えられています。",
+        "features_ja": "太陽に近づくと表面の氷が昇華してコマ（彗星頭部）とイオンテイル・ダストテイルを形成し、尾の長さは数千万〜数億kmに達することがあります。地球軌道と交差する軌道を持つため、エータ・アクエリア群やオリオン座流星群などの母天体でもあります。"
+      },
+      "physical": {
+        "mean_radius_km": 5.5,
+        "mass_kg": 2.2e14,
+        "bulk_density_kg_m3": 550.0,
+        "surface_gravity_m_s2": 0.00049,
+        "escape_velocity_km_s": 0.0023,
+        "geometric_albedo": 0.04,
+        "bond_albedo": null,
+        "mean_temperature_K": null,
+        "min_temperature_K": null,
+        "max_temperature_K": null,
+        "effective_temperature_K": null,
+        "luminosity_W": null
+      },
+      "rotation": {
+        "sidereal_period_hours": 52.8,
+        "axis_tilt_deg_to_ecliptic": null,
+        "is_retrograde": null
+      },
+      "orbit": {
+        "central_body": "sun",
+        "reference": "1P/ハレー彗星の公表軌道要素（長周期的に変動しうる）。Epoch JD 2449400.5付近の代表値。",
+        "epoch_julian_day": 2449400.5,
+        "semi_major_axis_au": 17.8,
+        "eccentricity": 0.967,
+        "inclination_deg": 162.0,
+        "longitude_of_ascending_node_deg": 59.4,
+        "longitude_of_perihelion_deg": null,
+        "argument_of_periapsis_deg": 112.3,
+        "mean_longitude_deg": null,
+        "mean_anomaly_deg": null,
+        "sidereal_orbital_period_days": 27726.15
+      }
+    }
+  ]
+}
