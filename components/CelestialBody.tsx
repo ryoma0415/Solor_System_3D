@@ -56,10 +56,12 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   // Load texture with R3F loader; on error, fallback to color
   const texture = useTexture(data.textureMap || '', undefined, () => null);
 
-  // Load ISS model (only used when id === 'iss'); temporarily disabled for texture test.
-  // const issModel = data.id === 'iss' ? useGLTF('/models/iss.glb') : null;
-  // useGLTF.preload('/models/iss.glb');
-  const issModel = null;
+  const toAssetPath = (path: string) => {
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+    return `${base}${path.startsWith('/') ? path : `/${path}`}`;
+  };
+  const issModel = useGLTF(toAssetPath('/models/iss.glb'));
+  useGLTF.preload(toAssetPath('/models/iss.glb'));
 
   // Compute scale for ISS so its longest dimension matches scaled physical size with a visibility floor.
   const issScale = useMemo(() => {
