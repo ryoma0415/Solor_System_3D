@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useTexture, Html } from '@react-three/drei';
+import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { CelestialBodyData } from '../types';
 import { calculateOrbitPosition, MIN_VISUAL_RADIUS, PLANET_COLORS, SIZE_SCALE } from '../utils/orbitalPhysics';
@@ -52,6 +52,31 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const [hovered, setHover] = useState(false);
   const { scene } = useThree();
   const parentPositionRef = useRef(new THREE.Vector3());
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
+
+  // Load texture with graceful fallback to color when missing
+  useEffect(() => {
+    if (!data.textureMap) {
+      setTexture(null);
+      return;
+    }
+    let mounted = true;
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      data.textureMap,
+      (tex) => {
+        if (mounted) setTexture(tex);
+      },
+      undefined,
+      () => {
+        // Missing texture -> just use color
+        if (mounted) setTexture(null);
+      }
+    );
+    return () => {
+      mounted = false;
+    };
+  }, [data.textureMap]);
   
   // Calculate rotation speed relative to frame
   // Rotation period in hours. Earth ~24h.
@@ -80,9 +105,6 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
 
   // Axial Tilt (Obliquity)
   const axialTiltRad = (data.physical.axial_tilt_deg || 0) * (Math.PI / 180);
-
-  // Load surface texture (assumes files exist under public/textures)
-  const texture = useTexture(data.textureMap || "", undefined, () => null);
 
   useFrame((state, delta) => {
     if (groupRef.current && data.orbit) {
