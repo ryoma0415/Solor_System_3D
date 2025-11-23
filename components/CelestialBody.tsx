@@ -107,8 +107,11 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const orbitScale =
     isSatellite && data.parent_id && baseOrbitRadius > 0 && parentRadiusAU > 0
       ? Math.min(
-          4, // avoid over-expansion
-          1 + (Math.max(parentVisualRadius / SIZE_SCALE, parentRadiusAU * 2) / baseOrbitRadius)
+          10, // avoid runaway expansion
+          Math.max(
+            2, // ensure a noticeable offset from parent surface
+            (Math.max(parentVisualRadius / SIZE_SCALE, parentRadiusAU * 3) * 3) / baseOrbitRadius
+          )
         )
       : 1;
 
