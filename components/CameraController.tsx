@@ -3,7 +3,7 @@ import { useThree, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { CelestialBodyData } from '../types';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
-import { SIZE_SCALE } from '../utils/orbitalPhysics';
+import { MIN_VISUAL_RADIUS, SIZE_SCALE } from '../utils/orbitalPhysics';
 
 interface CameraControllerProps {
   selectedBody: CelestialBodyData | null;
@@ -41,10 +41,11 @@ export const CameraController: React.FC<CameraControllerProps> = ({ selectedBody
             // Calculate appropriate zoom distance based on physical size
             // We use SIZE_SCALE to estimate visual size.
             // Default orbital view is far, but for close up we want to be near the surface.
-            const radiusAU = selectedBody.physical.mean_radius_km / 149597870.7;
+            const radiusKm = selectedBody.physical.mean_radius_km ?? selectedBody.physical.equatorial_radius_km ?? 0;
+            const radiusAU = radiusKm / 149597870.7;
             // Determine a nice offset. Small planets need to be closer.
-            // The SIZE_SCALE logic in CelestialBody: visualRadius = Math.max(radiusAU * SIZE_SCALE, 0.05);
-            const visualRadius = Math.max(radiusAU * SIZE_SCALE, 0.05);
+            // The SIZE_SCALE logic in CelestialBody: visualRadius = Math.max(radiusAU * SIZE_SCALE, MIN_VISUAL_RADIUS);
+            const visualRadius = Math.max(radiusAU * SIZE_SCALE, MIN_VISUAL_RADIUS);
             
             // Calculate an offset position relative to the planet
             // We keep the current camera angle but move it closer
@@ -52,8 +53,10 @@ export const CameraController: React.FC<CameraControllerProps> = ({ selectedBody
                 .subVectors(camera.position, targetPos)
                 .normalize();
             
-            // Distance multiplier: 4x visual radius gives a good framed view
-            const zoomDist = selectedBody.id === 'sun' ? 10 : visualRadius * 5;
+            // Distance multiplier tuned for smaller rendered bodies
+            const zoomMultiplier = selectedBody.id === 'sun' ? 8 : 2.5;
+            const minZoom = 0.08;
+            const zoomDist = Math.max(visualRadius * zoomMultiplier, minZoom);
             
             const desiredCameraPos = targetPos.clone().add(offsetDirection.multiplyScalar(zoomDist));
             

@@ -4,14 +4,32 @@ import { OrbitControls, Stars, Loader } from '@react-three/drei';
 import { Scene3D } from './components/Scene3D';
 import { InfoPanel } from './components/InfoPanel';
 import { CameraController } from './components/CameraController';
-import { CelestialBodyData } from './types';
+import { CelestialBodyCategory, CelestialBodyData } from './types';
 import { SOLAR_SYSTEM_DATA } from './data';
+
+const CATEGORY_ORDER: CelestialBodyCategory[] = [
+  'star',
+  'planet',
+  'dwarf_planet',
+  'moon',
+  'artificial_satellite',
+  'comet'
+];
+
+const CATEGORY_LABELS: Record<CelestialBodyCategory, string> = {
+  star: 'Star',
+  planet: 'Planets',
+  dwarf_planet: 'Dwarf Planets',
+  moon: 'Moons',
+  artificial_satellite: 'Satellites',
+  comet: 'Comets'
+};
 
 export default function App() {
   const [selectedBody, setSelectedBody] = useState<CelestialBodyData | null>(null);
   const [timeScale, setTimeScale] = useState<number>(1);
   const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [showDwarfs, setShowDwarfs] = useState<boolean>(false);
+  const [showTargets, setShowTargets] = useState<boolean>(false);
 
   // Handle dropdown change
   const handleBodySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -28,13 +46,13 @@ export default function App() {
 
   // Group bodies for the dropdown
   const groupedBodies = useMemo(() => {
-    const groups: Record<string, CelestialBodyData[]> = {
-      star: [],
-      planet: [],
-      dwarf_planet: []
-    };
+    const groups: Partial<Record<CelestialBodyCategory, CelestialBodyData[]>> = {};
+    CATEGORY_ORDER.forEach(cat => {
+      groups[cat] = [];
+    });
     SOLAR_SYSTEM_DATA.bodies.forEach(b => {
-      if (groups[b.category]) groups[b.category].push(b);
+      if (!groups[b.category]) groups[b.category] = [];
+      groups[b.category]?.push(b);
     });
     return groups;
   }, []);
@@ -55,7 +73,8 @@ export default function App() {
               onSelect={setSelectedBody} 
               timeScale={timeScale} 
               isPaused={isPaused}
-              showHighlights={showDwarfs}
+              showHighlights={showTargets}
+              selectedId={selectedBody?.id}
             />
             {/* Controls camera movement when a body is selected */}
             <CameraController selectedBody={selectedBody} />
@@ -66,7 +85,7 @@ export default function App() {
             enablePan={true} 
             enableZoom={true} 
             enableRotate={true}
-            minDistance={2}
+            minDistance={0.05}
             maxDistance={400}
           />
         </Canvas>
@@ -98,15 +117,15 @@ export default function App() {
                 className="w-full bg-slate-800 text-slate-200 text-xs md:text-sm rounded px-2 py-1.5 border border-slate-600 focus:outline-none focus:border-blue-500 transition-colors"
               >
                 <option value="">Select a celestial body...</option>
-                <optgroup label="Star">
-                  {groupedBodies.star.map(b => <option key={b.id} value={b.id}>{b.name.en} ({b.name.ja})</option>)}
-                </optgroup>
-                <optgroup label="Planets">
-                  {groupedBodies.planet.map(b => <option key={b.id} value={b.id}>{b.name.en} ({b.name.ja})</option>)}
-                </optgroup>
-                <optgroup label="Dwarf Planets">
-                  {groupedBodies.dwarf_planet.map(b => <option key={b.id} value={b.id}>{b.name.en} ({b.name.ja})</option>)}
-                </optgroup>
+                {CATEGORY_ORDER.map(cat => {
+                  const list = groupedBodies[cat];
+                  if (!list || list.length === 0) return null;
+                  return (
+                    <optgroup key={cat} label={CATEGORY_LABELS[cat]}>
+                      {list.map(b => <option key={b.id} value={b.id}>{b.name.en} ({b.name.ja})</option>)}
+                    </optgroup>
+                  );
+                })}
               </select>
             </div>
 
@@ -114,14 +133,14 @@ export default function App() {
               
               {/* Highlight Toggle */}
               <button
-                onClick={() => setShowDwarfs(!showDwarfs)}
+                onClick={() => setShowTargets(!showTargets)}
                 className={`px-3 py-1 rounded text-xs font-bold transition-all border ${
-                  showDwarfs 
+                  showTargets 
                     ? 'bg-purple-600 border-purple-400 text-white shadow-[0_0_10px_rgba(147,51,234,0.5)]' 
                     : 'bg-slate-800 border-slate-600 text-slate-300 hover:bg-slate-700'
                 }`}
               >
-                {showDwarfs ? "HIDE DWARFS" : "FIND DWARFS"}
+                {showTargets ? "HIDE SMALL TARGETS" : "FIND SMALL TARGETS"}
               </button>
 
               <div className="h-4 w-px bg-slate-700 mx-1"></div>

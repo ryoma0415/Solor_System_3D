@@ -3,6 +3,14 @@ export interface LocalizedName {
   en: string;
 }
 
+export type CelestialBodyCategory =
+  | 'star'
+  | 'planet'
+  | 'dwarf_planet'
+  | 'moon'
+  | 'comet'
+  | 'artificial_satellite';
+
 export interface OrbitalElements {
   semi_major_axis_au: number | null;
   eccentricity: number | null;
@@ -22,15 +30,20 @@ export interface OrbitData {
 }
 
 export interface PhysicalData {
-  equatorial_radius_km: number;
-  mean_radius_km: number;
-  mass_kg: number;
-  bulk_density_kg_m3: number;
-  equatorial_gravity_m_s2: number;
-  escape_velocity_km_s: number;
-  sidereal_rotation_period_hours: number;
-  sidereal_rotation_period_days: number;
+  equatorial_radius_km: number | null;
+  mean_radius_km: number | null;
+  mass_kg: number | null;
+  bulk_density_kg_m3: number | null;
+  equatorial_gravity_m_s2: number | null;
+  escape_velocity_km_s: number | null;
+  sidereal_rotation_period_hours: number | null;
+  sidereal_rotation_period_days: number | null;
   axial_tilt_deg: number | null;
+  dimensions_m?: {
+    length: number | null;
+    span: number | null;
+    height: number | null;
+  };
 }
 
 export interface TemperatureData {
@@ -48,6 +61,7 @@ export interface PhotometryData {
   absolute_magnitude_V?: number;
   visual_magnitude_V10?: number;
   geometric_albedo?: number;
+  bond_albedo?: number | null;
 }
 
 export interface RingData {
@@ -61,9 +75,14 @@ export interface RingData {
 export interface CelestialBodyData {
   id: string;
   name: LocalizedName;
-  category: 'star' | 'planet' | 'dwarf_planet';
+  category: CelestialBodyCategory;
   parent_id: string | null;
-  description_ja: string;
+  description_ja?: string;
+  description?: {
+    overview_ja?: string;
+    composition_ja?: string;
+    features_ja?: string;
+  };
   orbit: OrbitData | null;
   physical: PhysicalData;
   temperature: TemperatureData;

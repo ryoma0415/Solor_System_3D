@@ -90,19 +90,33 @@ export const PLANET_COLORS: Record<string, string> = {
   mercury: '#A5A5A5',
   venus: '#E3BB76',
   earth: '#22A6B3',
+  moon: '#d0d6db',
+  iss: '#ffffff',
+  phobos: '#887f76',
+  deimos: '#9b958d',
   mars: '#D35400',
   jupiter: '#E1DA00',
+  io: '#f3d65d',
+  europa: '#bfc9dd',
+  ganymede: '#9a8773',
+  callisto: '#6f6258',
   saturn: '#F4D03F',
+  titan: '#d1a754',
+  enceladus: '#e9f5ff',
   uranus: '#7DE3F4',
   neptune: '#3498DB',
+  triton: '#b2c8d9',
   ceres: '#95A5A6',
   pluto: '#D7BDE2',
+  charon: '#c7bfb7',
   haumea: '#BDC3C7',
   makemake: '#E59866',
   eris: '#F2F3F4',
+  halley_comet: '#9ed8ff'
 };
 
 // Scale factor for visual representation of planets (not orbits)
 // Orbits are 1 unit = 1 AU.
 // Sun radius is ~0.00465 AU.
-export const SIZE_SCALE = 350; // Make planets X times bigger than reality for visibility
+export const SIZE_SCALE = 300; // Visual boost while avoiding over-scaling
+export const MIN_VISUAL_RADIUS = 0.003; // Floor size so tiny bodies remain visible
