@@ -78,34 +78,39 @@ interface RawData {
 
 const rawData = rawSource as unknown as RawData;
 
+const withBasePath = (path: string): string => {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+  return `${base}${path.startsWith('/') ? path : `/${path}`}`;
+};
+
 const TEXTURE_MAP: Record<string, string> = {
-  sun: '/textures/sun.png',
-  mercury: '/textures/mercury.png',
-  venus: '/textures/venus.png',
-  earth: '/textures/earth.png',
-  moon: '/textures/moon.png',
-  iss: '/textures/iss.png',
-  mars: '/textures/mars.png',
-  phobos: '/textures/phobos.png',
-  deimos: '/textures/deimos.png',
-  jupiter: '/textures/jupiter.png',
-  io: '/textures/io.png',
-  europa: '/textures/europa.png',
-  ganymede: '/textures/ganymede.png',
-  callisto: '/textures/callisto.png',
-  saturn: '/textures/saturn.png',
-  titan: '/textures/titan.png',
-  enceladus: '/textures/enceladus.png',
-  uranus: '/textures/uranus.png',
-  neptune: '/textures/neptune.png',
-  triton: '/textures/triton.png',
-  ceres: '/textures/ceres.png',
-  pluto: '/textures/pluto.png',
-  charon: '/textures/charon.png',
-  haumea: '/textures/haumea.png',
-  makemake: '/textures/makemake.png',
-  eris: '/textures/eris.png',
-  halley_comet: '/textures/halley_comet.png'
+  sun: withBasePath('/textures/sun.png'),
+  mercury: withBasePath('/textures/mercury.png'),
+  venus: withBasePath('/textures/venus.png'),
+  earth: withBasePath('/textures/earth.png'),
+  moon: withBasePath('/textures/moon.png'),
+  iss: withBasePath('/textures/iss.png'),
+  mars: withBasePath('/textures/mars.png'),
+  phobos: withBasePath('/textures/phobos.png'),
+  deimos: withBasePath('/textures/deimos.png'),
+  jupiter: withBasePath('/textures/jupiter.png'),
+  io: withBasePath('/textures/io.png'),
+  europa: withBasePath('/textures/europa.png'),
+  ganymede: withBasePath('/textures/ganymede.png'),
+  callisto: withBasePath('/textures/callisto.png'),
+  saturn: withBasePath('/textures/saturn.png'),
+  titan: withBasePath('/textures/titan.png'),
+  enceladus: withBasePath('/textures/enceladus.png'),
+  uranus: withBasePath('/textures/uranus.png'),
+  neptune: withBasePath('/textures/neptune.png'),
+  triton: withBasePath('/textures/triton.png'),
+  ceres: withBasePath('/textures/ceres.png'),
+  pluto: withBasePath('/textures/pluto.png'),
+  charon: withBasePath('/textures/charon.png'),
+  haumea: withBasePath('/textures/haumea.png'),
+  makemake: withBasePath('/textures/makemake.png'),
+  eris: withBasePath('/textures/eris.png'),
+  halley_comet: withBasePath('/textures/halley_comet.png')
 };
 
 const RING_ENRICHMENTS: Record<string, RingData> = {
@@ -263,7 +268,7 @@ const convertBody = (body: RawBody): CelestialBodyData => {
       bond_albedo: body.physical.bond_albedo ?? null
     },
     ring: RING_ENRICHMENTS[body.id],
-    textureMap: TEXTURE_MAP[body.id] ?? `/textures/${body.id}.png`
+    textureMap: TEXTURE_MAP[body.id] ?? withBasePath(`/textures/${body.id}.png`)
   };
 };
 
