@@ -107,10 +107,10 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const orbitScale =
     isSatellite && data.parent_id && baseOrbitRadius > 0 && parentRadiusAU > 0
       ? Math.min(
-          50, // cap runaway expansion
+          5000, // generous cap for tiny orbits (e.g., ISS)
           Math.max(
             3, // ensure clear separation
-            (parentVisualRadius * 3) / baseOrbitRadius
+            (parentVisualRadius * 5) / baseOrbitRadius // push orbit well beyond inflated parent radius
           )
         )
       : 1;
