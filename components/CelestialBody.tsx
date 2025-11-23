@@ -135,6 +135,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const siblingSpreadMultiplier =
     isSatellite && siblingIndex >= 0 ? 1 + siblingIndex * 0.4 : 1; // stagger satellites without pulling planets
   const orbitScale = baseOrbitScale * siblingSpreadMultiplier;
+  const effectiveOrbitScale = data.id === 'iss' ? orbitScale * 0.4 : orbitScale;
 
   // Color lookup
   const color = PLANET_COLORS[data.id] || '#ffffff';
@@ -160,7 +161,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         data.orbit.sidereal_orbital_period_years,
         timeRef.current
       );
-      pos.multiplyScalar(orbitScale);
+      pos.multiplyScalar(effectiveOrbitScale);
 
       if (data.parent_id) {
         const parentObj = scene.getObjectByName(data.parent_id);
@@ -220,7 +221,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         orbit={data.orbit}
         color={isTarget ? '#d8b4fe' : color}
         parentId={data.parent_id ?? undefined}
-        scale={orbitScale}
+        scale={effectiveOrbitScale}
       />
       
       <group 
