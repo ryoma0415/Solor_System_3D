@@ -6,7 +6,7 @@ import { CelestialBodyData } from '../types';
 import { calculateOrbitPosition, MIN_VISUAL_RADIUS, PLANET_COLORS, SIZE_SCALE } from '../utils/orbitalPhysics';
 import { OrbitLine } from './OrbitLine';
 import { SOLAR_SYSTEM_DATA } from '../data';
-const SIMULATION_SPEED = 0.25; // 例: 25%の速さ
+const SIMULATION_SPEED = 0.03; // 例: 25%の速さ
 
 interface CelestialBodyProps {
   data: CelestialBodyData;
@@ -54,7 +54,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const { scene } = useThree();
   const parentPositionRef = useRef(new THREE.Vector3());
   const modelRef = useRef<THREE.Object3D>(null);
-  const isPointerless = data.category === 'moon' || data.category === 'artificial_satellite';
+  const isPointerless = data.id === 'moon' || data.id === 'iss';
   // Load texture with R3F loader; on error, fallback to color
   const texture = useTexture(data.textureMap || '', undefined, () => null);
   const parentBody = useMemo(
@@ -107,12 +107,9 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const orbitScale =
     isSatellite && data.parent_id && baseOrbitRadius > 0 && parentRadiusAU > 0
       ? Math.min(
-          50, // avoid runaway expansion
-          Math.max(
-            3, // minimum expansion
-            (parentVisualRadius * 3) / baseOrbitRadius
-          )
-        ) // ensure orbit clears the inflated parent radius comfortably
+          4, // avoid over-expansion
+          1 + (Math.max(parentVisualRadius / SIZE_SCALE, parentRadiusAU * 2) / baseOrbitRadius)
+        )
       : 1;
 
   // Color lookup
@@ -205,8 +202,8 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         ref={groupRef}
         name={data.id} // The group moves in orbit
         onClick={isPointerless ? undefined : (e) => { e.stopPropagation(); onSelect(data); }}
-        onPointerOver={isPointerless ? undefined : () => setHover(true)}
-        onPointerOut={isPointerless ? undefined : () => setHover(false)}
+        onPointerOver={() => setHover(true)}
+        onPointerOut={() => setHover(false)}
       >
         {/* Rotational Group to handle Axial Tilt */}
         <group rotation={[axialTiltRad, 0, 0]}>
@@ -253,7 +250,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         )}
 
         {/* Label */}
-        {!isPointerless && (hovered || isTarget) && (
+        {(hovered || isTarget) && (
           <Html position={[0, visualRadius + (isTarget ? 0.5 : 0.2), 0]} center zIndexRange={[100, 0]}>
             <div className={`
               px-2 py-1 rounded backdrop-blur-sm whitespace-nowrap transition-all
