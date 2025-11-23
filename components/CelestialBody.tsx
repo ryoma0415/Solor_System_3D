@@ -63,6 +63,22 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
     () => (data.parent_id ? SOLAR_SYSTEM_DATA.bodies.find((b) => b.id === data.parent_id) : null),
     [data.parent_id]
   );
+  const siblingSatellites = useMemo(
+    () =>
+      SOLAR_SYSTEM_DATA.bodies
+        .filter(
+          (b) =>
+            b.parent_id === data.parent_id &&
+            (b.category === 'moon' || b.category === 'artificial_satellite')
+        )
+        .map((b) => b.id)
+        .sort(),
+    [data.parent_id]
+  );
+  const siblingIndex = useMemo(
+    () => siblingSatellites.findIndex((id) => id === data.id),
+    [siblingSatellites, data.id]
+  );
 
   const toAssetPath = (path: string) => {
     const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
@@ -106,7 +122,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const parentVisualRadius = parentRadiusAU > 0 ? Math.max(parentRadiusAU * SIZE_SCALE, MIN_VISUAL_RADIUS) : 0;
   const baseOrbitRadius = data.orbit?.elements.semi_major_axis_au ?? 0;
   const isSatellite = data.category === 'moon' || data.category === 'artificial_satellite';
-  const orbitScale =
+  const baseOrbitScale =
     isSatellite && data.parent_id && baseOrbitRadius > 0 && parentRadiusAU > 0
       ? Math.min(
           5000, // generous cap for tiny orbits (e.g., ISS)
@@ -116,6 +132,9 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
           )
         )
       : 1;
+  const siblingSpreadMultiplier =
+    isSatellite && siblingIndex >= 0 ? 1 + siblingIndex * 0.4 : 1; // stagger satellites without pulling planets
+  const orbitScale = baseOrbitScale * siblingSpreadMultiplier;
 
   // Color lookup
   const color = PLANET_COLORS[data.id] || '#ffffff';
