@@ -18,8 +18,6 @@ const toAssetPath = (path: string): string => {
 };
 
 export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
-  if (!body) return null;
-
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -29,6 +27,25 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
     value == null ? 'N/A' : value.toExponential(2);
   const formatFixed = (value: number | null | undefined, digits = 2) =>
     value == null ? 'N/A' : value.toFixed(digits);
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    setIsPlaying(false);
+  };
+
+  // Stop audio when component unmounts
+  useEffect(() => () => stopAudio(), []);
+
+  // Stop audio when body changes (including when it becomes null)
+  useEffect(() => {
+    stopAudio();
+  }, [body?.id]);
+
+  if (!body) return null;
+
   const categoryLabelMap: Partial<Record<string, string>> = {
     star: 'Star',
     planet: 'Planet',
@@ -44,22 +61,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
     { title: 'Features', text: body.description?.features_ja },
   ].filter(block => block.text);
 
-  const audioSrc = AUDIO_SOURCES[body.id] ? toAssetPath(AUDIO_SOURCES[body.id]) : null;
-
-  const stopAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      audioRef.current = null;
-    }
-    setIsPlaying(false);
-  };
-
-  useEffect(() => {
-    stopAudio();
-    return () => stopAudio();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [body.id]);
+  const audioSrc = body && AUDIO_SOURCES[body.id] ? toAssetPath(AUDIO_SOURCES[body.id]) : null;
 
   const handleAudioToggle = () => {
     if (!audioSrc) return;
@@ -82,7 +84,10 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
   return (
     <div className="absolute right-0 top-0 h-full w-full md:w-96 bg-slate-900/90 backdrop-blur-xl border-l border-slate-700 p-6 overflow-y-auto transition-transform duration-300 ease-in-out z-20 shadow-2xl">
       <button 
-        onClick={onClose}
+        onClick={() => {
+          stopAudio();
+          onClose();
+        }}
         className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-full hover:bg-slate-800 transition-colors"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
