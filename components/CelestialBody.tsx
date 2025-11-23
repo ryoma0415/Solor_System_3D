@@ -79,9 +79,10 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
     };
   }, [data.textureMap]);
 
-  // Load ISS model (only used when id === 'iss'); preload to reduce flicker.
-  const issModel = data.id === 'iss' ? useGLTF('/models/iss.glb') : null;
-  useGLTF.preload('/models/iss.glb');
+  // Load ISS model (only used when id === 'iss'); temporarily disabled for texture test.
+  // const issModel = data.id === 'iss' ? useGLTF('/models/iss.glb') : null;
+  // useGLTF.preload('/models/iss.glb');
+  const issModel = null;
 
   // Compute scale for ISS so its longest dimension matches scaled physical size with a visibility floor.
   const issScale = useMemo(() => {
