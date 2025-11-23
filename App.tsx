@@ -84,7 +84,7 @@ export default function App() {
             enablePan={true} 
             enableZoom={true} 
             enableRotate={true}
-            minDistance={2}
+            minDistance={0.05}
             maxDistance={400}
           />
         </Canvas>

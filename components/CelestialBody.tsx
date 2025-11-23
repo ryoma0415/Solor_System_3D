@@ -53,6 +53,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const { scene } = useThree();
   const parentPositionRef = useRef(new THREE.Vector3());
   const modelRef = useRef<THREE.Object3D>(null);
+  const isPointerless = data.id === 'moon' || data.id === 'iss';
   // Load texture with R3F loader; on error, fallback to color
   const texture = useTexture(data.textureMap || '', undefined, () => null);
 
@@ -175,7 +176,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
       <group 
         ref={groupRef}
         name={data.id} // The group moves in orbit
-        onClick={(e) => { e.stopPropagation(); onSelect(data); }}
+        onClick={isPointerless ? undefined : (e) => { e.stopPropagation(); onSelect(data); }}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
       >
@@ -187,9 +188,10 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
               ref={modelRef}
               object={issModel.scene}
               scale={issScale || 1}
+              raycast={isPointerless ? () => null : undefined}
             />
           ) : (
-            <mesh ref={meshRef}>
+            <mesh ref={meshRef} raycast={isPointerless ? () => null : undefined}>
               <sphereGeometry args={[visualRadius, 64, 64]} />
               <meshStandardMaterial 
                 map={texture}
