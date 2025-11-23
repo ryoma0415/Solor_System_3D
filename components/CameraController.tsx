@@ -53,8 +53,8 @@ export const CameraController: React.FC<CameraControllerProps> = ({ selectedBody
                 .subVectors(camera.position, targetPos)
                 .normalize();
             
-            // Distance multiplier tuned for smaller rendered bodies
-            const zoomMultiplier = selectedBody.id === 'sun' ? 8 : 2.5;
+            // Distance multiplier tuned for smaller rendered bodies (unified across all bodies)
+            const zoomMultiplier = selectedBody.id === 'sun' ? 0.6 : 2.5;
             const minZoom = 0.08;
             const zoomDist = Math.max(visualRadius * zoomMultiplier, minZoom);
             
