@@ -108,13 +108,12 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const isSatellite = data.category === 'moon' || data.category === 'artificial_satellite';
   const orbitScale =
     isSatellite && data.parent_id && baseOrbitRadius > 0 && parentRadiusAU > 0
-      ? Math.min(
-          5000, // generous cap for tiny orbits (e.g., ISS)
-          Math.max(
-            3, // ensure clear separation
-            (parentVisualRadius * 5) / baseOrbitRadius // push orbit well beyond inflated parent radius
-          )
-        )
+      ? (() => {
+          const desiredOrbit = Math.max(parentVisualRadius * 3, baseOrbitRadius * 3); // pull satellites outside inflated parent
+          const ratio = desiredOrbit / baseOrbitRadius;
+          const clamped = Math.min(200, Math.max(3, ratio)); // cap to avoid hiding far away
+          return clamped;
+        })()
       : 1;
 
   // Color lookup
@@ -218,7 +217,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
             <primitive
               ref={modelRef}
               object={issModel.scene}
-              scale={(issScale || 1) * (isSelected ? 6 : 1)}
+              scale={(issScale || 1) * (isSelected ? 12 : 1)}
               raycast={isPointerless ? () => null : undefined}
             />
           ) : (
