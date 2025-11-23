@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Html, useGLTF } from '@react-three/drei';
+import { Html, useGLTF, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { CelestialBodyData } from '../types';
 import { calculateOrbitPosition, MIN_VISUAL_RADIUS, PLANET_COLORS, SIZE_SCALE } from '../utils/orbitalPhysics';
@@ -52,32 +52,9 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const [hovered, setHover] = useState(false);
   const { scene } = useThree();
   const parentPositionRef = useRef(new THREE.Vector3());
-  const [texture, setTexture] = useState<THREE.Texture | null>(null);
   const modelRef = useRef<THREE.Object3D>(null);
-
-  // Load texture with graceful fallback to color when missing
-  useEffect(() => {
-    if (!data.textureMap) {
-      setTexture(null);
-      return;
-    }
-    let mounted = true;
-    const loader = new THREE.TextureLoader();
-    loader.load(
-      data.textureMap,
-      (tex) => {
-        if (mounted) setTexture(tex);
-      },
-      undefined,
-      () => {
-        // Missing texture -> just use color
-        if (mounted) setTexture(null);
-      }
-    );
-    return () => {
-      mounted = false;
-    };
-  }, [data.textureMap]);
+  // Load texture with R3F loader; on error, fallback to color
+  const texture = useTexture(data.textureMap || '', undefined, () => null);
 
   // Load ISS model (only used when id === 'iss'); temporarily disabled for texture test.
   // const issModel = data.id === 'iss' ? useGLTF('/models/iss.glb') : null;
