@@ -256,18 +256,6 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
             </div>
           </Html>
         )}
-
-        {/* Marker for tiny bodies so they don't get lost when zoomed out */}
-        {isTinyBody && (
-          <Html center position={[0, visualRadius + 0.1, 0]} zIndexRange={[50, 0]}>
-            <div
-              className={`w-4 h-4 rounded-full border-2 ${
-                isTarget ? 'border-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.6)]' : 'border-white/60'
-              } bg-white/5 backdrop-blur-sm`}
-              style={{ opacity: hovered ? 1 : 0.7, pointerEvents: 'none' }}
-            />
-          </Html>
-        )}
       </group>
     </group>
   );
