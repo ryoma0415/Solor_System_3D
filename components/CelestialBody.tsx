@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
+import { Html, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import { CelestialBodyData } from '../types';
 import { calculateOrbitPosition, MIN_VISUAL_RADIUS, PLANET_COLORS, SIZE_SCALE } from '../utils/orbitalPhysics';
@@ -53,6 +53,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const { scene } = useThree();
   const parentPositionRef = useRef(new THREE.Vector3());
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
+  const modelRef = useRef<THREE.Object3D>(null);
 
   // Load texture with graceful fallback to color when missing
   useEffect(() => {
@@ -77,6 +78,22 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
       mounted = false;
     };
   }, [data.textureMap]);
+
+  // Load ISS model (only used when id === 'iss'); preload to reduce flicker.
+  const issModel = data.id === 'iss' ? useGLTF('/models/iss.glb') : null;
+  useGLTF.preload('/models/iss.glb');
+
+  // Compute scale for ISS so its longest dimension matches scaled physical size with a visibility floor.
+  const issScale = useMemo(() => {
+    if (data.id !== 'iss') return null;
+    const dims = data.physical.dimensions_m;
+    const lengthM = dims?.span ?? dims?.length ?? 100; // prefer full span
+    const meterToAU = 1 / 149597870700; // 1 m in AU
+    const targetRadius = Math.max((lengthM * meterToAU * SIZE_SCALE) / 2, MIN_VISUAL_RADIUS);
+    const targetLengthAU = targetRadius * 2;
+    const baseLengthAU = Math.max(lengthM * meterToAU, 1e-9);
+    return targetLengthAU / baseLengthAU;
+  }, [data.id, data.physical.dimensions_m]);
   
   // Calculate rotation speed relative to frame
   // Rotation period in hours. Earth ~24h.
@@ -135,8 +152,9 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
     }
 
     // Self-Rotation (Visual only)
-    if (meshRef.current) {
-      meshRef.current.rotation.y += rotationSpeed * (isPaused ? 0 : 1);
+    const rotTarget = data.id === 'iss' ? modelRef.current : meshRef.current;
+    if (rotTarget) {
+      rotTarget.rotation.y += rotationSpeed * (isPaused ? 0 : 1);
     }
   });
 
@@ -184,17 +202,25 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         {/* Rotational Group to handle Axial Tilt */}
         <group rotation={[axialTiltRad, 0, 0]}>
           {/* The Planet Mesh spins on its Y axis inside the tilted group */}
-          <mesh ref={meshRef}>
-            <sphereGeometry args={[visualRadius, 64, 64]} />
-            <meshStandardMaterial 
-              map={texture}
-              color={texture ? undefined : color} 
-              emissive={texture ? undefined : color}
-              emissiveIntensity={texture ? 0 : 0.1}
-              roughness={0.7}
-              metalness={0.1}
+          {data.id === 'iss' && issModel ? (
+            <primitive
+              ref={modelRef}
+              object={issModel.scene}
+              scale={issScale || 1}
             />
-          </mesh>
+          ) : (
+            <mesh ref={meshRef}>
+              <sphereGeometry args={[visualRadius, 64, 64]} />
+              <meshStandardMaterial 
+                map={texture}
+                color={texture ? undefined : color} 
+                emissive={texture ? undefined : color}
+                emissiveIntensity={texture ? 0 : 0.1}
+                roughness={0.7}
+                metalness={0.1}
+              />
+            </mesh>
+          )}
 
           {/* Rings */}
           {data.ring && (
