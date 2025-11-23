@@ -97,15 +97,19 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const radiusAU = radiusKm / 149597870.7;
   // Apply visual scale factor, but ensure minimum visibility
   const visualRadius = Math.max(radiusAU * SIZE_SCALE, MIN_VISUAL_RADIUS);
-  // Scale moon/satellite orbits so they clear the inflated parent radius while respecting physical ratios
+  // Scale moon/satellite orbits modestly so inflated parent radius doesn't swallow them
   const parentRadiusKm =
     parentBody?.physical.mean_radius_km ?? parentBody?.physical.equatorial_radius_km ?? 0;
   const parentRadiusAU = parentRadiusKm / 149597870.7;
   const parentVisualRadius = parentRadiusAU > 0 ? Math.max(parentRadiusAU * SIZE_SCALE, MIN_VISUAL_RADIUS) : 0;
   const baseOrbitRadius = data.orbit?.elements.semi_major_axis_au ?? 0;
+  const isSatellite = data.category === 'moon' || data.category === 'artificial_satellite';
   const orbitScale =
-    data.parent_id && baseOrbitRadius > 0 && parentRadiusAU > 0
-      ? Math.max((baseOrbitRadius / parentRadiusAU) * parentVisualRadius / baseOrbitRadius, 1)
+    isSatellite && data.parent_id && baseOrbitRadius > 0 && parentRadiusAU > 0
+      ? Math.min(
+          4, // avoid over-expansion
+          1 + (Math.max(parentVisualRadius / SIZE_SCALE, parentRadiusAU * 2) / baseOrbitRadius)
+        )
       : 1;
 
   // Color lookup
