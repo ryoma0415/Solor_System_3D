@@ -8,9 +8,10 @@ interface Scene3DProps {
   timeScale: number;
   isPaused: boolean;
   showHighlights?: boolean;
+  selectedId?: string | null;
 }
 
-export const Scene3D: React.FC<Scene3DProps> = ({ onSelect, timeScale, isPaused, showHighlights = false }) => {
+export const Scene3D: React.FC<Scene3DProps> = ({ onSelect, timeScale, isPaused, showHighlights = false, selectedId }) => {
   return (
     <>
       {SOLAR_SYSTEM_DATA.bodies.map((body) => (
@@ -21,6 +22,7 @@ export const Scene3D: React.FC<Scene3DProps> = ({ onSelect, timeScale, isPaused,
           timeScale={timeScale}
           isPaused={isPaused}
           showHighlight={showHighlights}
+          selectedId={selectedId ?? undefined}
         />
       ))}
     </>

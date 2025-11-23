@@ -14,6 +14,7 @@ interface CelestialBodyProps {
   isPaused: boolean;
   onSelect: (body: CelestialBodyData) => void;
   showHighlight?: boolean;
+  selectedId?: string;
 }
 
 // Helper component to render planetary rings
@@ -46,7 +47,8 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   timeScale, 
   isPaused, 
   onSelect,
-  showHighlight = false
+  showHighlight = false,
+  selectedId
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
@@ -122,6 +124,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const isSmallCategory = ['dwarf_planet', 'moon', 'artificial_satellite', 'comet'].includes(data.category);
   const isTinyBody = radiusKm === 0 || radiusKm < 1500;
   const isTarget = showHighlight && (isSmallCategory || isTinyBody);
+  const isSelected = selectedId === data.id;
 
   // Axial Tilt (Obliquity)
   const axialTiltRad = (data.physical.axial_tilt_deg || 0) * (Math.PI / 180);
@@ -215,7 +218,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
             <primitive
               ref={modelRef}
               object={issModel.scene}
-              scale={issScale || 1}
+              scale={(issScale || 1) * (isSelected ? 6 : 1)}
               raycast={isPointerless ? () => null : undefined}
             />
           ) : (

@@ -74,6 +74,7 @@ export default function App() {
               timeScale={timeScale} 
               isPaused={isPaused}
               showHighlights={showTargets}
+              selectedId={selectedBody?.id}
             />
             {/* Controls camera movement when a body is selected */}
             <CameraController selectedBody={selectedBody} />
