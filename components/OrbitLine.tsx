@@ -8,9 +8,10 @@ interface OrbitLineProps {
   orbit: OrbitData;
   color: string;
   parentId?: string;
+  scale?: number;
 }
 
-export const OrbitLine: React.FC<OrbitLineProps> = ({ orbit, color, parentId }) => {
+export const OrbitLine: React.FC<OrbitLineProps> = ({ orbit, color, parentId, scale = 1 }) => {
   const lineRef = useRef<THREE.Line>(null);
   const parentPosRef = useRef(new THREE.Vector3());
   const { scene } = useThree();
@@ -28,10 +29,12 @@ export const OrbitLine: React.FC<OrbitLineProps> = ({ orbit, color, parentId }) 
     
     for (let i = 0; i <= segments; i++) {
       const t = (i / segments) * period;
-      pts.push(calculateOrbitPosition(orbit.elements, period, t));
+      const p = calculateOrbitPosition(orbit.elements, period, t);
+      p.multiplyScalar(scale);
+      pts.push(p);
     }
     return pts;
-  }, [orbit]);
+  }, [orbit, scale]);
 
   useFrame(() => {
     if (!lineRef.current) return;

@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { CelestialBodyData } from '../types';
 import { calculateOrbitPosition, MIN_VISUAL_RADIUS, PLANET_COLORS, SIZE_SCALE } from '../utils/orbitalPhysics';
 import { OrbitLine } from './OrbitLine';
+import { SOLAR_SYSTEM_DATA } from '../data';
 const SIMULATION_SPEED = 0.25; // 例: 25%の速さ
 
 interface CelestialBodyProps {
@@ -56,6 +57,10 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const isPointerless = data.id === 'moon' || data.id === 'iss';
   // Load texture with R3F loader; on error, fallback to color
   const texture = useTexture(data.textureMap || '', undefined, () => null);
+  const parentBody = useMemo(
+    () => (data.parent_id ? SOLAR_SYSTEM_DATA.bodies.find((b) => b.id === data.parent_id) : null),
+    [data.parent_id]
+  );
 
   const toAssetPath = (path: string) => {
     const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
@@ -92,6 +97,16 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const radiusAU = radiusKm / 149597870.7;
   // Apply visual scale factor, but ensure minimum visibility
   const visualRadius = Math.max(radiusAU * SIZE_SCALE, MIN_VISUAL_RADIUS);
+  // Scale moon/satellite orbits so they clear the inflated parent radius while respecting physical ratios
+  const parentRadiusKm =
+    parentBody?.physical.mean_radius_km ?? parentBody?.physical.equatorial_radius_km ?? 0;
+  const parentRadiusAU = parentRadiusKm / 149597870.7;
+  const parentVisualRadius = parentRadiusAU > 0 ? Math.max(parentRadiusAU * SIZE_SCALE, MIN_VISUAL_RADIUS) : 0;
+  const baseOrbitRadius = data.orbit?.elements.semi_major_axis_au ?? 0;
+  const orbitScale =
+    data.parent_id && baseOrbitRadius > 0 && parentRadiusAU > 0
+      ? Math.max((baseOrbitRadius / parentRadiusAU) * parentVisualRadius / baseOrbitRadius, 1)
+      : 1;
 
   // Color lookup
   const color = PLANET_COLORS[data.id] || '#ffffff';
@@ -116,6 +131,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         data.orbit.sidereal_orbital_period_years,
         timeRef.current
       );
+      pos.multiplyScalar(orbitScale);
 
       if (data.parent_id) {
         const parentObj = scene.getObjectByName(data.parent_id);
@@ -171,7 +187,12 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
 
   return (
     <group>
-      <OrbitLine orbit={data.orbit} color={isTarget ? '#d8b4fe' : color} parentId={data.parent_id ?? undefined} />
+      <OrbitLine
+        orbit={data.orbit}
+        color={isTarget ? '#d8b4fe' : color}
+        parentId={data.parent_id ?? undefined}
+        scale={orbitScale}
+      />
       
       <group 
         ref={groupRef}
