@@ -54,7 +54,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const { scene } = useThree();
   const parentPositionRef = useRef(new THREE.Vector3());
   const modelRef = useRef<THREE.Object3D>(null);
-  const isPointerless = data.id === 'moon' || data.id === 'iss';
+  const isPointerless = data.category === 'moon' || data.category === 'artificial_satellite';
   // Load texture with R3F loader; on error, fallback to color
   const texture = useTexture(data.textureMap || '', undefined, () => null);
   const parentBody = useMemo(
@@ -205,8 +205,8 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         ref={groupRef}
         name={data.id} // The group moves in orbit
         onClick={isPointerless ? undefined : (e) => { e.stopPropagation(); onSelect(data); }}
-        onPointerOver={() => setHover(true)}
-        onPointerOut={() => setHover(false)}
+        onPointerOver={isPointerless ? undefined : () => setHover(true)}
+        onPointerOut={isPointerless ? undefined : () => setHover(false)}
       >
         {/* Rotational Group to handle Axial Tilt */}
         <group rotation={[axialTiltRad, 0, 0]}>
@@ -253,7 +253,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         )}
 
         {/* Label */}
-        {(hovered || isTarget) && (
+        {!isPointerless && (hovered || isTarget) && (
           <Html position={[0, visualRadius + (isTarget ? 0.5 : 0.2), 0]} center zIndexRange={[100, 0]}>
             <div className={`
               px-2 py-1 rounded backdrop-blur-sm whitespace-nowrap transition-all
