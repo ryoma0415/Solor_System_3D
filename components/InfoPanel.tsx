@@ -6,10 +6,47 @@ interface InfoPanelProps {
   onClose: () => void;
 }
 
-const AUDIO_SOURCES: Record<string, string> = {
-  sun: '/audio/sun_a.wav',
-  mercury: '/audio/mercury_a.wav',
-  venus: '/audio/venus_a.wav'
+const AUDIO_CREDITS = {
+  audio_a: 'VOICEVOX: 小夜/SAYO',
+  audio_b: 'VOICEVOX: 九州そら',
+  audio_c: 'VOICEVOX: 冥鳴ひまり'
+} as const;
+
+type AudioFolder = keyof typeof AUDIO_CREDITS;
+
+const audioEntry = (folder: AudioFolder, filename: string) => ({
+  src: `/audio/${folder}/${filename}`,
+  credit: AUDIO_CREDITS[folder]
+});
+
+const AUDIO_SOURCES: Partial<Record<string, { src: string; credit: string }>> = {
+  sun: audioEntry('audio_a', 'sun_a.wav'),
+  mercury: audioEntry('audio_a', 'mercury_a.wav'),
+  venus: audioEntry('audio_a', 'venus_a.wav'),
+  earth: audioEntry('audio_a', 'earth_a.wav'),
+  moon: audioEntry('audio_c', 'moon_c.wav'),
+  iss: audioEntry('audio_b', 'iss_b.wav'),
+  mars: audioEntry('audio_a', 'mars_a.wav'),
+  phobos: audioEntry('audio_c', 'phobos_c.wav'),
+  deimos: audioEntry('audio_c', 'deimos_c.wav'),
+  jupiter: audioEntry('audio_a', 'jupiter_a.wav'),
+  io: audioEntry('audio_c', 'io_c.wav'),
+  europa: audioEntry('audio_c', 'europa_c.wav'),
+  ganymede: audioEntry('audio_c', 'ganymede_c.wav'),
+  callisto: audioEntry('audio_c', 'callisto_c.wav'),
+  saturn: audioEntry('audio_a', 'saturn_a.wav'),
+  titan: audioEntry('audio_c', 'titan_c.wav'),
+  enceladus: audioEntry('audio_c', 'enceladus_c.wav'),
+  uranus: audioEntry('audio_a', 'uranus_a.wav'),
+  neptune: audioEntry('audio_a', 'neptune_a.wav'),
+  triton: audioEntry('audio_c', 'triton_c.wav'),
+  ceres: audioEntry('audio_b', 'ceres_b.wav'),
+  pluto: audioEntry('audio_b', 'pluto_b.wav'),
+  charon: audioEntry('audio_c', 'charon_c.wav'),
+  haumea: audioEntry('audio_b', 'haumea_b.wav'),
+  makemake: audioEntry('audio_b', 'makemake_b.wav'),
+  eris: audioEntry('audio_b', 'eris_b.wav'),
+  halley_comet: audioEntry('audio_b', 'halley_comet_b.wav')
 };
 
 const toAssetPath = (path: string): string => {
@@ -61,7 +98,8 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
     { title: 'Features', text: body.description?.features_ja },
   ].filter(block => block.text);
 
-  const audioSrc = body && AUDIO_SOURCES[body.id] ? toAssetPath(AUDIO_SOURCES[body.id]) : null;
+  const audioInfo = body ? AUDIO_SOURCES[body.id] : undefined;
+  const audioSrc = audioInfo ? toAssetPath(audioInfo.src) : null;
 
   const handleAudioToggle = () => {
     if (!audioSrc) return;
@@ -114,7 +152,7 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ body, onClose }) => {
               >
                 {isPlaying ? 'Stop Audio' : 'Play Audio'}
               </button>
-              <span className="text-[11px] text-slate-400">VOICEVOX:小夜/SAYO</span>
+              <span className="text-[11px] text-slate-400">{audioInfo?.credit}</span>
             </div>
           )}
         </div>
