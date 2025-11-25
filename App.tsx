@@ -25,6 +25,8 @@ const CATEGORY_LABELS: Record<CelestialBodyCategory, string> = {
   comet: 'Comets'
 };
 
+const BGM_VOLUME = 0.25; // Lower background volume so narration stays clear
+
 const toAssetPath = (path: string): string => {
   const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
   return `${base}${path.startsWith('/') ? path : `/${path}`}`;
@@ -77,10 +79,12 @@ export default function App() {
     if (!bgmRef.current) {
       const audio = new Audio(toAssetPath('/audio/BGM/birth_of_the_universe.mp3'));
       audio.loop = true;
+      audio.volume = BGM_VOLUME;
       audio.onerror = () => setIsBgmOn(false);
       bgmRef.current = audio;
     }
 
+    bgmRef.current.volume = BGM_VOLUME;
     bgmRef.current.loop = true;
     bgmRef.current.onerror = () => setIsBgmOn(false);
     bgmRef.current.play().catch(() => setIsBgmOn(false));
