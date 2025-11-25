@@ -105,7 +105,7 @@ export const TourCameraDriver: React.FC<{ command: TourCameraCommand }> = ({ com
       if (obj) {
         const target = new THREE.Vector3();
         obj.getWorldPosition(target);
-        const desiredDistance = command.distance ?? lastOffsetRef.current.length() || 1.2;
+        const desiredDistance = command.distance ?? (lastOffsetRef.current.length() || 1.2);
         if (command.orbitSpeed) {
           orbitAngleRef.current += command.orbitSpeed * delta;
           const yOffset = lastOffsetRef.current.y;
