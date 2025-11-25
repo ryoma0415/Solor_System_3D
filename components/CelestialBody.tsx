@@ -15,6 +15,7 @@ interface CelestialBodyProps {
   onSelect: (body: CelestialBodyData) => void;
   showHighlight?: boolean;
   selectedId?: string;
+  orbitSpeedMultiplier?: number;
 }
 
 // Helper component to render planetary rings
@@ -48,7 +49,8 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   isPaused, 
   onSelect,
   showHighlight = false,
-  selectedId
+  selectedId,
+  orbitSpeedMultiplier = 1
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
@@ -157,7 +159,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
     if (groupRef.current && data.orbit) {
       // Update orbit position
       if (!isPaused) {
-        timeRef.current += delta * timeScale * 0.5 * SIMULATION_SPEED; // Base speed
+        timeRef.current += delta * timeScale * 0.5 * SIMULATION_SPEED * orbitSpeedMultiplier; // Base speed
       }
 
       const pos = calculateOrbitPosition(
