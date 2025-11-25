@@ -26,7 +26,7 @@ const CATEGORY_LABELS: Record<CelestialBodyCategory, string> = {
   comet: 'Comets'
 };
 
-const BGM_VOLUME = 0.25; // Lower background volume so narration stays clear
+const BGM_VOLUME = 0.12; // Lower background volume so narration stays clear
 const TOUR_VOICE_CREDIT = 'VOICEVOX: 小夜/SAYO';
 
 type TourId = 'tour1' | 'tour2' | 'tour3';
@@ -39,12 +39,12 @@ const TOUR_SELECT_OPTIONS: { id: TourId; label: string }[] = [
 
 const CAMERA_DISTANCES = {
   overview: [0, 55, 120] as [number, number, number],
-  sun: 1.4,
-  earth: 0.55,
-  mars: 0.45,
-  jupiter: 1.6,
-  saturn: 1.6,
-  pluto: 0.5
+  sun: 1.1,
+  earth: 0.38,
+  mars: 0.3,
+  jupiter: 1.2,
+  saturn: 1.2,
+  pluto: 0.35
 };
 
 const toAssetPath = (path: string): string => {
@@ -193,7 +193,7 @@ export default function App() {
     if (!tourBgmRef.current) {
       const audio = new Audio(toAssetPath('/audio/tour_a/tour_a_bgm.mp3'));
       audio.loop = false;
-      audio.volume = 0.35;
+      audio.volume = 0.22;
       tourBgmRef.current = audio;
     }
     tourBgmRef.current.currentTime = 0;
@@ -325,7 +325,7 @@ export default function App() {
       // Earth
       setShowSunEffects(false);
       setTourStatusText('Tour 1: Earth');
-      setOrbitSpeedOverrides({ moon: 0.1, iss: 0.1 });
+      setOrbitSpeedOverrides({ moon: 0.05, iss: 0.05 });
       setTourCameraCommand({
         mode: 'moveToBody',
         targetBodyId: 'earth',
@@ -345,7 +345,7 @@ export default function App() {
 
       // Mars
       setTourStatusText('Tour 1: Mars');
-      setOrbitSpeedOverrides({ phobos: 0.2, deimos: 0.2 });
+      setOrbitSpeedOverrides({ phobos: 0.1, deimos: 0.1 });
       setTourCameraCommand({
         mode: 'moveToBody',
         targetBodyId: 'mars',
@@ -365,7 +365,7 @@ export default function App() {
 
       // Jupiter
       setTourStatusText('Tour 1: Jupiter');
-      setOrbitSpeedOverrides({ io: 0.2, europa: 0.2, ganymede: 0.2, callisto: 0.2 });
+      setOrbitSpeedOverrides({ io: 0.1, europa: 0.1, ganymede: 0.1, callisto: 0.1 });
       setTourCameraCommand({
         mode: 'moveToBody',
         targetBodyId: 'jupiter',
@@ -385,7 +385,7 @@ export default function App() {
 
       // Saturn
       setTourStatusText('Tour 1: Saturn');
-      setOrbitSpeedOverrides({ titan: 0.2, enceladus: 0.2 });
+      setOrbitSpeedOverrides({ titan: 0.1, enceladus: 0.1 });
       setTourCameraCommand({
         mode: 'moveToBody',
         targetBodyId: 'saturn',
