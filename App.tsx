@@ -1,4 +1,4 @@
-import React, { useState, Suspense, useMemo } from 'react';
+import React, { useState, Suspense, useMemo, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars, Loader } from '@react-three/drei';
 import { Scene3D } from './components/Scene3D';
@@ -25,11 +25,18 @@ const CATEGORY_LABELS: Record<CelestialBodyCategory, string> = {
   comet: 'Comets'
 };
 
+const toAssetPath = (path: string): string => {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+  return `${base}${path.startsWith('/') ? path : `/${path}`}`;
+};
+
 export default function App() {
   const [selectedBody, setSelectedBody] = useState<CelestialBodyData | null>(null);
   const [timeScale, setTimeScale] = useState<number>(1);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [showTargets, setShowTargets] = useState<boolean>(false);
+  const [isBgmOn, setIsBgmOn] = useState<boolean>(false);
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
 
   // Handle dropdown change
   const handleBodySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -56,6 +63,39 @@ export default function App() {
     });
     return groups;
   }, []);
+
+  // Manage BGM loop play/pause
+  useEffect(() => {
+    if (!isBgmOn) {
+      if (bgmRef.current) {
+        bgmRef.current.pause();
+        bgmRef.current.currentTime = 0;
+      }
+      return;
+    }
+
+    if (!bgmRef.current) {
+      const audio = new Audio(toAssetPath('/audio/BGM/birth_of_the_universe.mp3'));
+      audio.loop = true;
+      audio.onerror = () => setIsBgmOn(false);
+      bgmRef.current = audio;
+    }
+
+    bgmRef.current.loop = true;
+    bgmRef.current.onerror = () => setIsBgmOn(false);
+    bgmRef.current.play().catch(() => setIsBgmOn(false));
+  }, [isBgmOn]);
+
+  // Cleanup on unmount
+  useEffect(
+    () => () => {
+      if (bgmRef.current) {
+        bgmRef.current.pause();
+        bgmRef.current = null;
+      }
+    },
+    []
+  );
 
   return (
     <div className="relative w-full h-screen bg-black text-white overflow-hidden font-sans">
@@ -145,6 +185,20 @@ export default function App() {
 
               <div className="h-4 w-px bg-slate-700 mx-1"></div>
 
+              {/* BGM Toggle */}
+              <button
+                onClick={() => setIsBgmOn(!isBgmOn)}
+                className={`px-3 py-1 rounded text-xs font-bold transition-all border ${
+                  isBgmOn
+                    ? 'bg-emerald-600 border-emerald-400 text-white shadow-[0_0_10px_rgba(16,185,129,0.4)]'
+                    : 'bg-slate-800 border-slate-600 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                {isBgmOn ? "BGM ON" : "BGM OFF"}
+              </button>
+
+              <div className="h-4 w-px bg-slate-700 mx-1"></div>
+
               <button 
                 onClick={() => setIsPaused(!isPaused)}
                 className="px-3 py-1 rounded bg-blue-600 hover:bg-blue-500 text-xs font-bold transition-colors"
@@ -166,8 +220,9 @@ export default function App() {
                 <span className="text-xs w-8 text-right font-mono">{timeScale}x</span>
               </div>
             </div>
-            <div className="text-[10px] text-slate-500 text-right">
-              Orbits are to scale (AU). Sizes are exaggerated.
+            <div className="text-[10px] text-slate-500 text-right leading-snug">
+              <div>Orbits are to scale (AU). Sizes are exaggerated.</div>
+              <div>音楽: BGMer (http://bgmer.net)</div>
             </div>
           </div>
         </header>
