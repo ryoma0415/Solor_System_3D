@@ -13,6 +13,7 @@ export interface TourCameraCommand {
   distance?: number;
   durationMs?: number;
   orbitSpeed?: number;
+  offset?: [number, number, number];
 }
 
 /**
@@ -52,11 +53,12 @@ export const TourCameraDriver: React.FC<{ command: TourCameraCommand }> = ({ com
       if (obj) {
         const pos = new THREE.Vector3();
         obj.getWorldPosition(pos);
-        const dir = new THREE.Vector3().subVectors(camera.position, pos);
+        const dir = command.offset ? new THREE.Vector3(...command.offset) : new THREE.Vector3().subVectors(camera.position, pos);
         if (dir.lengthSq() < 1e-4) {
           dir.set(1, 0.2, 1);
         }
-        dir.setLength(command.distance ?? dir.length());
+        const targetLen = command.distance ?? dir.length();
+        dir.setLength(targetLen);
         lastOffsetRef.current.copy(dir);
         orbitAngleRef.current = Math.atan2(dir.z, dir.x);
       }
