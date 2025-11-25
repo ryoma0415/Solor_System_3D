@@ -14,6 +14,7 @@ export interface TourCameraCommand {
   durationMs?: number;
   orbitSpeed?: number;
   offset?: [number, number, number];
+  sunFacing?: boolean;
 }
 
 /**
@@ -89,7 +90,11 @@ export const TourCameraDriver: React.FC<{ command: TourCameraCommand }> = ({ com
         const target = new THREE.Vector3();
         obj.getWorldPosition(target);
         const distance = command.distance ?? 1.2;
-        const dir = new THREE.Vector3().subVectors(camera.position, target);
+        const dir = command.offset
+          ? new THREE.Vector3(...command.offset)
+          : command.sunFacing && target.lengthSq() > 0
+            ? target.clone().multiplyScalar(-1).normalize()
+            : new THREE.Vector3().subVectors(camera.position, target);
         if (dir.lengthSq() < 1e-4) dir.set(1, 0.2, 1);
         dir.setLength(distance);
         const desired = target.clone().add(dir);
@@ -117,7 +122,14 @@ export const TourCameraDriver: React.FC<{ command: TourCameraCommand }> = ({ com
             Math.sin(orbitAngleRef.current) * desiredDistance
           );
         } else if (lastOffsetRef.current.lengthSq() === 0) {
-          lastOffsetRef.current.set(1, 0.2, 1).setLength(desiredDistance);
+          const base =
+            command.offset
+              ? new THREE.Vector3(...command.offset)
+              : command.sunFacing && target.lengthSq() > 0
+                ? target.clone().multiplyScalar(-1).normalize()
+                : new THREE.Vector3(1, 0.2, 1);
+          base.setLength(desiredDistance);
+          lastOffsetRef.current.copy(base);
         } else {
           lastOffsetRef.current.setLength(desiredDistance);
         }
