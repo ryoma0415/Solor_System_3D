@@ -357,13 +357,6 @@ export default function App() {
       await waitMs(1000);
       await waitMs(1000);
       ensureNotAborted();
-      setTourCameraCommand({
-        mode: 'followBody',
-        targetBodyId: 'mars',
-        distance: CAMERA_DISTANCES.mars,
-        offset: [0, 0.28, 0.4],
-        sunFacing: true
-      });
       await playNarration('tour_a_003.wav');
       ensureNotAborted();
 
