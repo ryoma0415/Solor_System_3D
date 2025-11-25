@@ -90,11 +90,13 @@ export const TourCameraDriver: React.FC<{ command: TourCameraCommand }> = ({ com
         const target = new THREE.Vector3();
         obj.getWorldPosition(target);
         const distance = command.distance ?? 1.2;
-        const dir = command.offset
-          ? new THREE.Vector3(...command.offset)
-          : command.sunFacing && target.lengthSq() > 0
+        const baseDir =
+          command.sunFacing && target.lengthSq() > 0
             ? target.clone().multiplyScalar(-1).normalize()
             : new THREE.Vector3().subVectors(camera.position, target);
+        const dir = command.offset
+          ? baseDir.add(new THREE.Vector3(...command.offset))
+          : baseDir;
         if (dir.lengthSq() < 1e-4) dir.set(1, 0.2, 1);
         dir.setLength(distance);
         const desired = target.clone().add(dir);
@@ -123,13 +125,12 @@ export const TourCameraDriver: React.FC<{ command: TourCameraCommand }> = ({ com
           );
         } else if (lastOffsetRef.current.lengthSq() === 0) {
           const base =
-            command.offset
-              ? new THREE.Vector3(...command.offset)
-              : command.sunFacing && target.lengthSq() > 0
-                ? target.clone().multiplyScalar(-1).normalize()
-                : new THREE.Vector3(1, 0.2, 1);
-          base.setLength(desiredDistance);
-          lastOffsetRef.current.copy(base);
+            command.sunFacing && target.lengthSq() > 0
+              ? target.clone().multiplyScalar(-1).normalize()
+              : new THREE.Vector3(1, 0.2, 1);
+          const merged = command.offset ? base.add(new THREE.Vector3(...command.offset)) : base;
+          merged.setLength(desiredDistance);
+          lastOffsetRef.current.copy(merged);
         } else {
           lastOffsetRef.current.setLength(desiredDistance);
         }

@@ -26,7 +26,7 @@ const CATEGORY_LABELS: Record<CelestialBodyCategory, string> = {
   comet: 'Comets'
 };
 
-const BGM_VOLUME = 0.06; // Lower background volume so narration stays clear
+const BGM_VOLUME = 0.05; // Lower background volume so narration stays clear
 const TOUR_VOICE_CREDIT = 'VOICEVOX: 小夜/SAYO';
 
 type TourId = 'tour1' | 'tour2' | 'tour3';
@@ -193,7 +193,7 @@ export default function App() {
     if (!tourBgmRef.current) {
       const audio = new Audio(toAssetPath('/audio/tour_a/tour_a_bgm.mp3'));
       audio.loop = false;
-      audio.volume = 0.12;
+      audio.volume = 0.1;
       tourBgmRef.current = audio;
     }
     tourBgmRef.current.currentTime = 0;
@@ -352,7 +352,7 @@ export default function App() {
         distance: CAMERA_DISTANCES.mars,
         durationMs: 1000,
         sunFacing: true,
-        offset: [0, 0.35, 0]
+        offset: [0, 0.28, 0.4]
       });
       await waitMs(1000);
       await waitMs(1000);
@@ -361,7 +361,7 @@ export default function App() {
         mode: 'followBody',
         targetBodyId: 'mars',
         distance: CAMERA_DISTANCES.mars,
-        offset: [0, 0.35, 0],
+        offset: [0, 0.28, 0.4],
         sunFacing: true
       });
       await playNarration('tour_a_003.wav');
