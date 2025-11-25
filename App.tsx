@@ -25,7 +25,7 @@ const CATEGORY_LABELS: Record<CelestialBodyCategory, string> = {
   comet: 'Comets'
 };
 
-const BGM_VOLUME = 0.25; // Lower background volume so narration stays clear
+const BGM_VOLUME = 0.15; // Lower background volume so narration stays clear
 
 const toAssetPath = (path: string): string => {
   const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
